@@ -1,7 +1,8 @@
 import { addKeyword, EVENTS } from "@builderbot/bot";
 
-import AttemptHandler from "../../functions/AttemptHandler.js";
+import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { orderFlow } from "./order.flow.js";
+import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
 
 const cheeseFlow = addKeyword(EVENTS.ACTION)
   .addAnswer(['Selecciona el tipo de queso que desea', '\nPor favor escribe el número de alguna de las opciones:', '\n1️⃣ Semi Duro', '2️⃣ Chicloso', '3️⃣ Suave', '4️⃣ Requesón', '5️⃣ Pasteurizado'],
@@ -74,7 +75,10 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
         return fallBack('Por favor Escribe una cantidad válida. Solo se pueden hacer pedidos de 1 a 100 unidades.');
       }
 
-      
+      let productResponse = state.get('product');
+      let units = parseInt(ctx.body);
+
+      addOrUpdateProduct(order, productResponse, units);
 
       await state.update({ order: order, tries: 0 });
 
