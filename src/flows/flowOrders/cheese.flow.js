@@ -1,8 +1,8 @@
 import { addKeyword, EVENTS } from "@builderbot/bot";
-
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { orderFlow } from "./order.flow.js";
 import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
+import { listOrderFlow } from "./finalOrder.flow.js";
 
 const cheeseFlow = addKeyword(EVENTS.ACTION)
   .addAnswer(['Selecciona el tipo de queso que desea', '\nPor favor escribe el número de alguna de las opciones:', '\n1️⃣ Semi Duro', '2️⃣ Chicloso', '3️⃣ Suave', '4️⃣ Requesón', '5️⃣ Pasteurizado'],
@@ -26,27 +26,16 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
         return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
       }
 
-      let productResponse = '';
+      const productResponse = {
+        '1': 'Semi Duro',
+        '2': 'Chicloso',
+        '3': 'Suave',
+        '4': 'Requesón',
+        '5': 'Pasteurizado'
+      };
+      
 
-      switch (ctx.body) {
-        case "1":
-          productResponse = 'Semi Duro';
-          break;
-        case "2":
-          productResponse = 'Chicloso';
-          break;
-        case "3":
-          productResponse = 'Suave';
-          break;
-        case "4":
-          productResponse = 'Requesón';
-          break;
-        case "5":
-          productResponse = 'Pasteurizado';
-          break;
-      }
-
-      await state.update({ product: productResponse, tries: 0 });
+      await state.update({ product: productResponse[ctx.body], tries: 0 });
     })
 
   .addAnswer('Escribe la cantidad de unidades que deseas: ',
@@ -109,7 +98,7 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
       return gotoFlow(orderFlow);
     } else if (ctx.body.toLowerCase() === 'no') {
       await state.update({ tries: 0 });
-      return console.log('Pedido Finalizado');
+      return gotoFlow(listOrderFlow)
     }
   });
 

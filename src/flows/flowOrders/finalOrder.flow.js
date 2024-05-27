@@ -1,5 +1,6 @@
 import { addKeyword, EVENTS } from "@builderbot/bot";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
+import { sendOrderData } from "../../services/api/orderService.js";
 
 
 const listOrderFlow = addKeyword(EVENTS.ACTION) 
@@ -9,10 +10,10 @@ const listOrderFlow = addKeyword(EVENTS.ACTION)
 
     let summary = "";
     order.forEach((item, index) => {
-        summary += `${index + 1}. Producto: *${item.producto}* - Unidades: *${item.cantidad}*\n`;
+        summary += `${index + 1}. Producto: *${item.product}* - Unidades: *${item.quantity}*\n`;
     });
 
-    await state.update({ detailsOrder: summary, celular: ctx.from });
+    await state.update({ detailsOrder: summary, phone: ctx.from });
 
     // Redireccionar al flujo finalOrderFlow
     await flowDynamic(`${summary}`)
@@ -55,10 +56,10 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
 
   })
 
-  .addAnswer('Tu registro se está procesando ⏱️...', null, async (_, {  endFlow }) => {
+  .addAnswer('Tu pedido se está procesando ⏱️...', null, async (_, {state, endFlow }) => {
     
     // Lógica para guardar el pedido en la base de datos
-    
+    await sendOrderData(state);
 
     return endFlow('✅ ¡Pedido realizado con éxito! Nos comunicaremos muy pronto para finalizar tu compra.')
   })

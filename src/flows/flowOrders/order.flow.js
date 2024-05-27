@@ -1,7 +1,8 @@
 import { addKeyword } from "@builderbot/bot";
-
-
-import AttemptHandler from "../../functions/AttemptHandler.js";
+import {AttemptHandler} from "../../functions/AttemptHandler.js";
+import { cheeseFlow } from "./cheese.flow.js";
+import { yogurtFlow } from "./yogurt.flow.js";
+import { manjarFlow } from "./manjarFlow.js";
 
 const orderFlow = addKeyword('pedido', { sensitive: true })
   .addAnswer(['Voy a tomar tu pedido', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'])
@@ -12,7 +13,7 @@ const orderFlow = addKeyword('pedido', { sensitive: true })
     '2️⃣ Yogurt',
     '3️⃣ Manjar de leche'
   ], 
-  { capture: true }, async (ctx, { state, fallBack, endFlow }) => {
+  { capture: true }, async (ctx, { state, fallBack, gotoFlow, endFlow }) => {
 
     // Crear una instancia de AttemptHandler
     const attemptHandler = new AttemptHandler(state);
@@ -37,11 +38,11 @@ const orderFlow = addKeyword('pedido', { sensitive: true })
 
     switch (ctx.body) {
       case "1":
-        return console.log('Queso');
+        return gotoFlow(cheeseFlow);
       case "2":
-        return console.log('Yogurt');
+        return gotoFlow(yogurtFlow);
       case "3":
-        return console.log('Manjar de leche');
+        return gotoFlow(manjarFlow);
     }
   });
 

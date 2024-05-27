@@ -2,6 +2,7 @@ import { addKeyword, EVENTS } from "@builderbot/bot";
 import { orderFlow } from "./order.flow.js";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
+import { listOrderFlow } from "./finalOrder.flow.js";
 
 const manjarFlow = addKeyword(EVENTS.ACTION)
 
@@ -27,18 +28,12 @@ const manjarFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
     }
 
-    let manjarGrams = ''
+    const manjarGrams = {
+      '1': 'Manjar de leche, 110g',
+      '2': 'Manjar de leche, 200g'
+    };
 
-    switch(ctx.body) {
-    case "1":
-      manjarGrams = 'Manjar de leche, 110g';
-      break;
-    case "2":
-      manjarGrams = 'Manjar de leche, 200g';
-      break;
-    }
-
-    await state.update({ product: manjarGrams, tries: 0})
+    await state.update({ product: manjarGrams[ctx.body], tries: 0})
 
   })
 
@@ -104,7 +99,7 @@ const manjarFlow = addKeyword(EVENTS.ACTION)
     }
     else if (ctx.body.toLowerCase() === 'no') {
       await state.update({tries: 0})
-      console.log('flow list Order')
+      return gotoFlow(listOrderFlow)
     }
   }) 
 

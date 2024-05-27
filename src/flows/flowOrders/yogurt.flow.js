@@ -1,8 +1,8 @@
 import { addKeyword, EVENTS } from "@builderbot/bot";
 import { orderFlow } from "./order.flow.js";
-
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
+import { listOrderFlow } from "./finalOrder.flow.js";
 
 const yogurtFlow = addKeyword(EVENTS.ACTION)
   .addAnswer(['Selecciona el sabor de yogurt que deseas.','\nPor favor escribe el número de alguna de las opciones:','\n1️⃣ Frutilla ','2️⃣ Mora','3️⃣ Piña','4️⃣ Durazno', '5️⃣ Guanábana','6️⃣ Pack, 10 unidades de 180ml (surtido) '],
@@ -29,27 +29,15 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       return gotoFlow(yogurtPackFlow)
     }
 
-    let yogurtFlavor = ''
+    const yogurtFlavor = {
+      '1': 'Yogur de Frutilla',
+      '2': 'Yogur de Mora',
+      '3': 'Yogur de Piña',
+      '4': 'Yogur de Durazno',
+      '5': 'Yogur de Guanábana'
+    };
 
-    switch(ctx.body) {
-    case "1":
-      yogurtFlavor = 'Yogur de Frutilla';
-      break;
-    case "2":
-      yogurtFlavor = 'Yogur de Mora';
-      break;
-    case "3":
-      yogurtFlavor = 'Yogur de Piña';
-      break;
-    case "4":
-      yogurtFlavor = 'Yogur de Durazno';
-      break;
-    case "5":
-      yogurtFlavor = 'Yogur de Guanábana';
-      break;
-    }
-
-    await state.update({ flavor: yogurtFlavor, tries: 0})
+    await state.update({ flavor: yogurtFlavor[ctx.body], tries: 0})
   })
 
 
@@ -76,19 +64,13 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
     }
 
-    let Liters = ''
-
-    switch(ctx.body) {
-    case "1":
-      Liters = ' 1 Litro';
-      break;
-    case "2":
-      Liters = ' 2 Litros';
-      break;
-    }
+    const liters = {
+      '1': '1 Litro',
+      '2': '2 Litros'
+    };
 
 
-    let productResponseLiters = state.get('flavor') + Liters
+    let productResponseLiters = state.get('flavor') + liters[ctx.body]
 
     await state.update({ product: productResponseLiters, tries: 0 })
 
@@ -159,7 +141,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     }
     else if (ctx.body.toLowerCase() === 'no') {
       await state.update({tries: 0})
-      return console.log('list Order Flow')
+      return gotoFlow(listOrderFlow)
     }
 
   })  
@@ -229,7 +211,7 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
       }
       else if (ctx.body.toLowerCase() === 'no') {
         await state.update({tries: 0})
-        return console.log('list Order Flow')
+        return gotoFlow(listOrderFlow)
       }
 
     })  

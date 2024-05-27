@@ -7,7 +7,7 @@ const API_URL = `${process.env.ME_API_URL}/pedidos`;
 
 // Consulta para obtener el cliente por celular
 const sendOrderData = async (state) => {
-  const response = await fetch(`${process.env.ME_API_URL}/clientes?filters[celular][$eq]=${state.get('celular')}`, {
+  const response = await fetch(`${process.env.ME_API_URL}/clientes?filters[celular][$eq]=${state.get('phone')}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': process.env.TOKEN_API// Añade tu token de autenticación si es necesario
@@ -18,25 +18,25 @@ const sendOrderData = async (state) => {
     throw new Error(`Error en la consulta: ${response.statusText}`);
   }
 
-  const clienteData = await response.json();
-  const cliente = clienteData.data[0];
+  const clientData = await response.json();
+  const client = clientData.data[0];
 
 
-  const idCliente = cliente.id;
-  const nombreCliente = cliente.attributes.nombre;
-  const ciudadCliente = cliente.attributes.ciudad;
-  const celularCliente = cliente.attributes.celular;
-  const detallesPedido = state.get('detailsOrder');
+  const idClient = client.id;
+  const nameClient = client.attributes.nombre;
+  const cityClient = client.attributes.ciudad;
+  const phoneClient = client.attributes.celular;
+  const detailsOrder = state.get('detailsOrder');
   //const detallesPedido = pedido.map(item => `Producto: ${item.producto}, Unidades: ${item.cantidad}`).join('; ');
   
-  const pedidoData = {
+  const orderData = {
     data: {
-      nombre: nombreCliente,
-      celular: celularCliente,
-      ciudad: ciudadCliente,
-      detalles: detallesPedido,
+      nombre: nameClient,
+      celular: phoneClient,
+      ciudad: cityClient,
+      detalles: detailsOrder,
       fecha: new Date().toISOString(), // Fecha actual en formato ISO
-      cliente: idCliente
+      cliente: idClient
     }
   };
 
@@ -48,7 +48,7 @@ const sendOrderData = async (state) => {
         'Content-Type': 'application/json',
         'Authorization': process.env.TOKEN_API // token de autenticación 
       },
-      body: JSON.stringify(pedidoData)
+      body: JSON.stringify(orderData)
     });
   
     if(pedidoResponse.ok){

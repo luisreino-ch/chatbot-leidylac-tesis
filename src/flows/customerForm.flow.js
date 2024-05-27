@@ -1,6 +1,9 @@
 import { addKeyword } from "@builderbot/bot";
 import {AttemptHandler} from "../functions/AttemptHandler.js";
-import { sendCustomerData } from "../services/clientService.js";
+
+import { orderFlow } from "./flowOrders/order.flow.js";
+import { sendCustomerData } from "../services/api/clientService.js";
+
 
 const customerFormFlow = addKeyword('formulario')
   .addAnswer([
@@ -131,11 +134,15 @@ const customerFormFlow = addKeyword('formulario')
   })
 
   // Código para enviar la información a una base de datos
-  .addAnswer('Tu registro se está procesando ⏱️...', null, async (ctx, {state, flowDynamic }) => {
+  .addAnswer('Tu registro se está procesando ⏱️...', null, async (ctx, {state, flowDynamic, gotoFlow }) => {
     
     // Lógica de guardar el registro en la base de datos
     await sendCustomerData(state);
+    
     await flowDynamic('✅ ¡Registro exitoso! Tu información ha sido guardada con éxito.');
+
+    // Redirección al flujo pedido
+    return gotoFlow(orderFlow);
     
   });
 
