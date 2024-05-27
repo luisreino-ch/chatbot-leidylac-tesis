@@ -1,4 +1,5 @@
 import {createFlow} from '@builderbot/bot'
+import { customerFormFlow } from './customerForm.flow';
 
 
 
@@ -8,6 +9,7 @@ const flowsAgents = [
 ];
 
 const flows = [
+  customerFormFlow
   
 ];
 
