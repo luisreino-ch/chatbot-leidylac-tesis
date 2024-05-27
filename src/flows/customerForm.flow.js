@@ -1,5 +1,6 @@
 import { addKeyword } from "@builderbot/bot";
-import AttemptHandler from "../functions/AttemptHandler.js";
+import {AttemptHandler} from "../functions/AttemptHandler.js";
+import { sendCustomerData } from "../services/clientService.js";
 
 const customerFormFlow = addKeyword('formulario')
   .addAnswer([
@@ -130,8 +131,10 @@ const customerFormFlow = addKeyword('formulario')
   })
 
   // Código para enviar la información a una base de datos
-  .addAnswer('Tu registro se está procesando ⏱️...', null, async (ctx, { flowDynamic }) => {
+  .addAnswer('Tu registro se está procesando ⏱️...', null, async (ctx, {state, flowDynamic }) => {
     
+    // Lógica de guardar el registro en la base de datos
+    await sendCustomerData(state);
     await flowDynamic('✅ ¡Registro exitoso! Tu información ha sido guardada con éxito.');
     
   });
