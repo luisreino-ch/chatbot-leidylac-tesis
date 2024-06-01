@@ -27,11 +27,11 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
       }
 
       const productResponse = {
-        '1': 'Semi Duro',
-        '2': 'Chicloso',
-        '3': 'Suave',
-        '4': 'Requesón',
-        '5': 'Pasteurizado'
+        '1': 'Queso Semi Duro',
+        '2': 'Queso Chicloso',
+        '3': 'Queso Suave',
+        '4': 'Queso Requesón',
+        '5': 'Queso Pasteurizado'
       };
       
 

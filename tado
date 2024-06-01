@@ -1,0 +1,71 @@
+[33mcommit 7163ee47347a606e6179c5b9a63d8808c5ce62c1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 18:06:43 2024 -0500
+
+    Sistema de pedidos y registro de clientes v1
+
+[33mcommit f819b0f09b51767a7717aa7032ac0d9772eeb611[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 14:21:25 2024 -0500
+
+    Crear función 'orderService' para utilizar el servicio API y guardar las órdenes en la base de datos.
+
+[33mcommit d3f3ff48124b2b006d5881e400bea37295ff3409[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 14:13:21 2024 -0500
+
+    Crear flujo 'finalOrder.flow' para mostrar un resumen del pedido y enviarlo a la base de datos.
+
+[33mcommit 82a1c1c616a37fe0448491b662fff8c560489a68[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 14:06:51 2024 -0500
+
+    Crear flujo 'manjarFlow' para gestionar pedidos del producto manjar de leche.
+
+[33mcommit efa37fe53bab31a5ec0c1ef808c0a19365dd55c2[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 13:59:57 2024 -0500
+
+    Crear flujo 'yogurt.flow' para gestionar pedidos de productos de yogurt.
+
+[33mcommit 59e1af20c2a71318bc2ecaf79fd3b41b50e2c42c[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 13:09:29 2024 -0500
+
+    Creación de la función 'addOrUpdateProduct' para agregar o actualizar un producto en el pedido del cliente.
+
+[33mcommit a43f3efa21f2873a9aa78f8b1b8fa29bb0941230[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 13:04:08 2024 -0500
+
+    Creación del flujo 'cheese.flow' para realizar pedidos de productos de queso.
+
+[33mcommit 5873f63a4fc6eedc714115ebe15bd586f227d848[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 12:54:19 2024 -0500
+
+    Creación del flujo 'order.flow' para la selección de productos principales.
+
+[33mcommit a7b8e720710166f27f659c645a7fc2299a70773c[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 12:40:45 2024 -0500
+
+    Creación de la función 'clientService' para utilizar el servicio API y guardar los clientes registrados.
+
+[33mcommit 74694e5f8a73c644d9df8ec858b4a07402fa3b94[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 12:32:41 2024 -0500
+
+    Creación del flujo 'customerFormFlow' para el registro de usuarios como clientes. Este formulario permite registrar nuevos clientes en el sistema.
+
+[33mcommit 648f36f1325c683600d40dbaf2492685bb7a9bd5[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 12:21:11 2024 -0500
+
+    Función para controlar los intentos
+
+[33mcommit 79241c7192af975480bcb4e3befa012e5422c940[m
+Author: Luis Reino <luisreinoch@gmail.com>
+Date:   Mon May 27 12:08:22 2024 -0500
+
+    Módulos y configuraciones iniciales del proyecto

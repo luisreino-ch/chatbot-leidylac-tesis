@@ -1,9 +1,8 @@
 import { addKeyword } from "@builderbot/bot";
 import {AttemptHandler} from "../functions/AttemptHandler.js";
-
 import { orderFlow } from "./flowOrders/order.flow.js";
 import { sendCustomerData } from "../services/api/clientService.js";
-
+import { delay } from "../functions/delay.js";  
 
 const customerFormFlow = addKeyword('formulario')
   .addAnswer([
@@ -57,7 +56,7 @@ const customerFormFlow = addKeyword('formulario')
         await state.update({ tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
-      return fallBack('Por favor, escribe un nombre válido.');
+      return fallBack('Por favor, escribe una ciudad válida, solo se pueden ingresar ciudades del Ecuador.');
     }
 
     await state.update({ city: ctx.body, tries: 0 }); 
@@ -93,7 +92,7 @@ const customerFormFlow = addKeyword('formulario')
         await state.update({ tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
-      return fallBack('Por favor, escribe un nombre válido.');
+      return fallBack('Por favor, selecciona una de las opciones válidas');
     }
 
     await state.update({ business: businessMap[ctx.body], tries: 0 }); 
@@ -136,12 +135,12 @@ const customerFormFlow = addKeyword('formulario')
   // Código para enviar la información a una base de datos
   .addAnswer('Tu registro se está procesando ⏱️...', null, async (ctx, {state, flowDynamic, gotoFlow }) => {
     
-    // Lógica de guardar el registro en la base de datos
+    // guardar el registro en la base de datos
     await sendCustomerData(state);
-    
+    await delay(1500);
     await flowDynamic('✅ ¡Registro exitoso! Tu información ha sido guardada con éxito.');
-
-    // Redirección al flujo pedido
+    await delay(1000);
+    // flujo pedido
     return gotoFlow(orderFlow);
     
   });

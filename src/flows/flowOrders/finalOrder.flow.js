@@ -1,7 +1,7 @@
 import { addKeyword, EVENTS } from "@builderbot/bot";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { sendOrderData } from "../../services/api/orderService.js";
-
+import { delay } from "../../functions/delay.js";
 
 const listOrderFlow = addKeyword(EVENTS.ACTION) 
   .addAnswer('Resumen del pedido:', null, async(ctx, { state, flowDynamic, gotoFlow }) => {
@@ -60,7 +60,7 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
     
     // Lógica para guardar el pedido en la base de datos
     await sendOrderData(state);
-
+    await delay(1500);
     return endFlow('✅ ¡Pedido realizado con éxito! Nos comunicaremos muy pronto para finalizar tu compra.')
   })
 
