@@ -10,7 +10,7 @@ const listOrderFlow = addKeyword(EVENTS.ACTION)
 
     let summary = "";
     order.forEach((item, index) => {
-        summary += `${index + 1}. Producto: *${item.product}* - Unidades: *${item.quantity}*\n`;
+        summary += `${index + 1}. Producto: *${item.product}* - Unidades: *${item.quantity}* - Precio: *${item.price}*\n`;
     });
 
     await state.update({ detailsOrder: summary, phone: ctx.from });

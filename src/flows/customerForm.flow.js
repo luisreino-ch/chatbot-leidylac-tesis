@@ -123,7 +123,9 @@ const customerFormFlow = addKeyword('formulario')
 
     if (ctx.body.toLowerCase() === 'si') {
       await state.update({ tries: 0 });
+
       console.log('Registro confirmado');
+
     } else if (ctx.body.toLowerCase() === 'no') {
       // Limpiar el array de pedidos
       await state.update({ tries: 0 });
@@ -139,7 +141,6 @@ const customerFormFlow = addKeyword('formulario')
     await sendCustomerData(state);
     await delay(1500);
     await flowDynamic('✅ ¡Registro exitoso! Tu información ha sido guardada con éxito.');
-    await delay(1000);
     // flujo pedido
     return gotoFlow(orderFlow);
     

@@ -3,10 +3,13 @@ import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { orderFlow } from "./order.flow.js";
 import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
 import { listOrderFlow } from "./finalOrder.flow.js";
+import { sendPrice } from "../../services/api/priceProductService.js";
+
 
 const cheeseFlow = addKeyword(EVENTS.ACTION)
   .addAnswer(['Selecciona el tipo de queso que desea', '\nPor favor escribe el número de alguna de las opciones:', '\n1️⃣ Semi Duro', '2️⃣ Chicloso', '3️⃣ Suave', '4️⃣ Requesón', '5️⃣ Pasteurizado'],
     { capture: true }, async (ctx, { state, fallBack, endFlow }) => {
+     
       // Crear una instancia de AttemptHandler
       const attemptHandler = new AttemptHandler(state);
 
@@ -33,9 +36,13 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
         '4': 'Queso Requesón',
         '5': 'Queso Pasteurizado'
       };
+
+      const selectedProductName = productResponse[ctx.body];
+
+      const priceProduct = await sendPrice(selectedProductName);
       
 
-      await state.update({ product: productResponse[ctx.body], tries: 0 });
+      await state.update({ product: selectedProductName, price: priceProduct,  tries: 0 });
     })
 
   .addAnswer('Escribe la cantidad de unidades que deseas: ',
@@ -65,9 +72,10 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
       }
 
       let productResponse = state.get('product');
+      let price = state.get('price');
       let units = parseInt(ctx.body);
 
-      addOrUpdateProduct(order, productResponse, units);
+      addOrUpdateProduct(order, productResponse, units, price);
 
       await state.update({ order: order, tries: 0 });
 

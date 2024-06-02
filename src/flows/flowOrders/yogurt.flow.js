@@ -3,6 +3,7 @@ import { orderFlow } from "./order.flow.js";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
 import { listOrderFlow } from "./finalOrder.flow.js";
+import { sendPrice } from "../../services/api/priceProductService.js";
 
 const yogurtFlow = addKeyword(EVENTS.ACTION)
   .addAnswer(['Selecciona el sabor de yogurt que deseas.','\nPor favor escribe el número de alguna de las opciones:','\n1️⃣ Frutilla ','2️⃣ Mora','3️⃣ Piña','4️⃣ Durazno', '5️⃣ Guanábana','6️⃣ Pack, 10 unidades de 180ml (surtido) '],
@@ -29,7 +30,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       return gotoFlow(yogurtPackFlow)
     }
 
-    const yogurtFlavor = {
+    const productResponse = {
       '1': 'Yogur de Frutilla',
       '2': 'Yogur de Mora',
       '3': 'Yogur de Piña',
@@ -37,7 +38,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       '5': 'Yogur de Guanábana'
     };
 
-    await state.update({ flavor: yogurtFlavor[ctx.body], tries: 0})
+    await state.update({ flavor: productResponse[ctx.body], tries: 0})
   })
 
 
@@ -70,9 +71,11 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     };
 
 
-    let productResponseLiters = state.get('flavor') + liters[ctx.body]
+    let productResponseLiters = `${state.get('flavor')} ${liters[ctx.body]}`
 
-    await state.update({ product: productResponseLiters, tries: 0 })
+    const priceProduct = await sendPrice(productResponseLiters);
+
+    await state.update({ product: productResponseLiters, price: priceProduct, tries: 0 })
 
   })
 
@@ -104,9 +107,10 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     }
     
     let productResponse = state.get('product')
+    let price = state.get('price')
     let units = parseInt(ctx.body)
 
-    addOrUpdateProduct(order, productResponse, units);
+    addOrUpdateProduct(order, productResponse, units, price);
 
     await state.update({ order: order , tries: 0})
     
@@ -175,10 +179,12 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Por favor escribe una cantidad válida. Solo se pueden hacer pedidos de 1 a 100 unidades.');
     }
 
-    let productResponse = 'Pack 10U 180ml'
+    let productResponse = 'Yogur Pack 10U 180ml'
+    const price = await sendPrice(productResponse);
     let units = parseInt(ctx.body)
 
-    addOrUpdateProduct(order, productResponse, units);
+
+    addOrUpdateProduct(order, productResponse, units, price);
 
     await state.update({ order: order, tries: 0})
   })

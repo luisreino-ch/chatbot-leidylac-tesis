@@ -3,6 +3,7 @@ import { orderFlow } from "./order.flow.js";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { addOrUpdateProduct } from "../../functions/addOrUpdateProduct.js";
 import { listOrderFlow } from "./finalOrder.flow.js";
+import { sendPrice } from "../../services/api/priceProductService.js";
 
 const manjarFlow = addKeyword(EVENTS.ACTION)
 
@@ -28,12 +29,16 @@ const manjarFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
     }
 
-    const manjarGrams = {
-      '1': 'Manjar de leche, 110g',
-      '2': 'Manjar de leche, 200g'
+    const productResponse = {
+      '1': 'Manjar de leche 110g',
+      '2': 'Manjar de leche 200g'
     };
 
-    await state.update({ product: manjarGrams[ctx.body], tries: 0})
+    const selectedProductName = productResponse[ctx.body];
+
+    const priceProduct = await sendPrice(selectedProductName); 
+
+    await state.update({ product: selectedProductName, price: priceProduct, tries: 0})
 
   })
 
@@ -66,9 +71,10 @@ const manjarFlow = addKeyword(EVENTS.ACTION)
     }
 
     let productResponse = state.get('product')
+    let price = state.get('price');
     let units = parseInt(ctx.body)
 
-    addOrUpdateProduct(order, productResponse, units)
+    addOrUpdateProduct(order, productResponse, units, price)
 
     await state.update({ order: order, tries: 0 })
   })
