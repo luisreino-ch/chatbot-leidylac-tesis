@@ -24,14 +24,15 @@ const sendCustomerData = async (state) => {
       },
       body: JSON.stringify(customerData)
     });
-  
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Cliente creado:', data);
-    } else {
+
+
+    if (!response.ok) {
       const errorData = await response.json();
-      console.error('Error al crear el cliente:', response.statusText, errorData);
+      throw new Error(`Error al crear el pedido: ${response.statusText}, ${JSON.stringify(errorData)}`);
     }
+    const data = await response.json();
+    console.log('Pedido creado:', data);
+  
   } catch (error) {
     console.error('Error en la solicitud:', error);
   }

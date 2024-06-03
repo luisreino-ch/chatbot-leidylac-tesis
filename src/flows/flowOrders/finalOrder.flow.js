@@ -4,14 +4,23 @@ import { sendOrderData } from "../../services/api/orderService.js";
 import { delay } from "../../functions/delay.js";
 
 const listOrderFlow = addKeyword(EVENTS.ACTION) 
-  .addAnswer('Resumen del pedido:', null, async(ctx, { state, flowDynamic, gotoFlow }) => {
+  .addAnswer('🛒 *Resumen del Pedido* 🛒', null, async(ctx, { state, flowDynamic, gotoFlow }) => {
 
     let order = state.get('order') || [];
+    
 
     let summary = "";
-    order.forEach((item, index) => {
+    let total = 0;
+    /* order.forEach((item, index) => {
         summary += `${index + 1}. Producto: *${item.product}* - Unidades: *${item.quantity}* - Precio: *${item.price}*\n`;
     });
+    */
+    order.forEach((item, index) => {
+      summary += `${index + 1}. Producto: *${item.product}*\n    Unidades: *${item.quantity}*\n    Precio: *$${item.price}*\n`;
+      total += item.quantity * item.price;
+    });
+
+    summary += `\n*Total del Pedido: $${total.toFixed(2)}*`;
 
     await state.update({ detailsOrder: summary, phone: ctx.from });
 
@@ -60,7 +69,7 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
     
     // Lógica para guardar el pedido en la base de datos
     await sendOrderData(state);
-    await delay(1500);
+    await delay(1000);
     return endFlow('✅ ¡Pedido realizado con éxito! Nos comunicaremos muy pronto para finalizar tu compra.')
   })
 

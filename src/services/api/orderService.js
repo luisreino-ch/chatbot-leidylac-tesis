@@ -51,13 +51,13 @@ const sendOrderData = async (state) => {
       body: JSON.stringify(orderData)
     });
   
-    if(pedidoResponse.ok){
-      const data = await pedidoResponse.json();
-      console.log('Pedido creado:', data);
-    }else{
+    if (!pedidoResponse.ok) {
       const errorData = await pedidoResponse.json();
-      console.error('Error al crear el pedido:', pedidoResponse.statusText, errorData);
+      throw new Error(`Error al crear el pedido: ${pedidoResponse.statusText}, ${JSON.stringify(errorData)}`);
     }
+
+    const data = await pedidoResponse.json();
+    console.log('Pedido creado:', data);
     
   }catch (error) {
     console.error('Error en la solicitud:', error);

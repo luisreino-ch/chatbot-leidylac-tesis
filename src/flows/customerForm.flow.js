@@ -139,7 +139,7 @@ const customerFormFlow = addKeyword('formulario')
     
     // guardar el registro en la base de datos
     await sendCustomerData(state);
-    await delay(1500);
+    await delay(1000);
     await flowDynamic('✅ ¡Registro exitoso! Tu información ha sido guardada con éxito.');
     // flujo pedido
     return gotoFlow(orderFlow);
