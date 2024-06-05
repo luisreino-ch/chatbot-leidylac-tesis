@@ -5,7 +5,7 @@ import { yogurtFlow } from "./yogurt.flow.js";
 import { manjarFlow } from "./manjarFlow.js";
 
 const orderFlow = addKeyword('pedido', { sensitive: true })
-  .addAnswer(['Voy a tomar tu pedido', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'])
+  .addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'])
   .addAnswer([
     'Selecciona un producto',
     '\nPor favor escribe el número de alguna de las opciones:',
@@ -45,6 +45,5 @@ const orderFlow = addKeyword('pedido', { sensitive: true })
         return gotoFlow(manjarFlow);
     }
   });
-
 
 export { orderFlow };

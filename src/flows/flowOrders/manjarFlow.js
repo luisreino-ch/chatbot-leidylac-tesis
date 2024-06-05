@@ -7,7 +7,7 @@ import { sendPrice } from "../../services/api/priceProductService.js";
 
 const manjarFlow = addKeyword(EVENTS.ACTION)
 
-  .addAnswer(['Por favor escribe el número de alguna de las opciones:','\n1️⃣ 110g','2️⃣ 200g'],
+  .addAnswer(['Por favor escribe el número de alguna de las opciones:','\n1️⃣ 110g','2️⃣ 250g'],
     {capture:true}, async(ctx, { state, fallBack, endFlow}) => {
 
     // Crear una instancia de AttemptHandler
@@ -31,7 +31,7 @@ const manjarFlow = addKeyword(EVENTS.ACTION)
 
     const productResponse = {
       '1': 'Manjar de leche 110g',
-      '2': 'Manjar de leche 200g'
+      '2': 'Manjar de leche 250g'
     };
 
     const selectedProductName = productResponse[ctx.body];

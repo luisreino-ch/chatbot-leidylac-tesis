@@ -2,6 +2,7 @@ import { addKeyword, EVENTS } from "@builderbot/bot";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { sendOrderData } from "../../services/api/orderService.js";
 import { delay } from "../../functions/delay.js";
+import { editOrderFlow } from "./editOrder.flow.js";
 
 const listOrderFlow = addKeyword(EVENTS.ACTION) 
   .addAnswer('🛒 *Resumen del Pedido* 🛒', null, async(ctx, { state, flowDynamic, gotoFlow }) => {
@@ -33,7 +34,7 @@ const listOrderFlow = addKeyword(EVENTS.ACTION)
 
 const finalOrderFlow = addKeyword(EVENTS.ACTION) 
 
-  .addAnswer(['Deseas confirmar tu pedido?','\nPor favor escribe *si* ✅ o *no* ❌.'], {capture:true}, async(ctx, { state, fallBack, endFlow }) => {
+  .addAnswer(['Deseas confirmar tu pedido?','\nPor favor escribe el número de alguna de las opciones:', '\n1️⃣ Confirmar pedido', '2️⃣ Editar Pedido','3️⃣ Cancelar pedido'], {capture:true}, async(ctx, { state, fallBack, gotoFlow, endFlow }) => {
     // Crear una instancia de AttemptHandler
     const attemptHandler = new AttemptHandler(state);
 
@@ -43,7 +44,7 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
     }
 
     // Verificar respuesta válida y manejo de intentos
-    if (!["si", "no"].includes(ctx.body.toLowerCase())) {
+    if (!["1", "2", "3"].includes(ctx.body)) {
       // Manejo de intentos fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
@@ -53,9 +54,12 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
     }
 
-    if (ctx.body.toLowerCase() === 'si') {
+    if (ctx.body.toLowerCase() === '1') {
       await state.update({ order: [], tries: 0 });
       console.log('Pedido confirmado')
+
+    }else if (ctx.body.toLowerCase() === '2') {
+      return gotoFlow(editOrderFlow);
     }
     else if (ctx.body.toLowerCase() === 'no') {
       // Limpiar el array de pedidos

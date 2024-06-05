@@ -5,6 +5,7 @@ import { cheeseFlow } from './flowOrders/cheese.flow.js';
 import { yogurtFlow, yogurtPackFlow } from './flowOrders/yogurt.flow.js';
 import { manjarFlow } from './flowOrders/manjarFlow.js';
 import { finalOrderFlow, listOrderFlow } from './flowOrders/finalOrder.flow.js';
+import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowOrders/editOrder.flow.js';
 
 
 
@@ -21,7 +22,10 @@ const flows = [
   yogurtPackFlow,
   manjarFlow,
   listOrderFlow,
-  finalOrderFlow
+  finalOrderFlow,
+  editOrderFlow,
+  modifyQuantityFlow,
+  removeProductFlow
   
 ];
 

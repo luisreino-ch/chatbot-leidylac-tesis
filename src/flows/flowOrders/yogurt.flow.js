@@ -6,7 +6,7 @@ import { listOrderFlow } from "./finalOrder.flow.js";
 import { sendPrice } from "../../services/api/priceProductService.js";
 
 const yogurtFlow = addKeyword(EVENTS.ACTION)
-  .addAnswer(['Selecciona el sabor de yogurt que deseas.','\nPor favor escribe el número de alguna de las opciones:','\n1️⃣ Frutilla ','2️⃣ Mora','3️⃣ Piña','4️⃣ Durazno', '5️⃣ Guanábana','6️⃣ Pack, 10 unidades de 180ml (surtido) '],
+  .addAnswer(['Selecciona el sabor de yogurt que deseas.','\nPor favor escribe el número de alguna de las opciones:','\n1️⃣ Frutilla ','2️⃣ Mora','3️⃣ Piña','4️⃣ Durazno', '5️⃣ Guanábana','6️⃣ Pack, 10 unidades de 150ml (surtido) '],
   {capture:true}, async(ctx, { state, fallBack, endFlow, gotoFlow}) => {
 
     // Crear una instancia de AttemptHandler
@@ -179,7 +179,7 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Por favor escribe una cantidad válida. Solo se pueden hacer pedidos de 1 a 100 unidades.');
     }
 
-    let productResponse = 'Yogur Pack 10U 180ml'
+    let productResponse = 'Yogur Pack 10U 150ml'
     const price = await sendPrice(productResponse);
     let units = parseInt(ctx.body)
 
