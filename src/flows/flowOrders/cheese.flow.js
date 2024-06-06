@@ -7,7 +7,7 @@ import { sendPrice } from "../../services/api/priceProductService.js";
 
 
 const cheeseFlow = addKeyword(EVENTS.ACTION)
-  .addAnswer(['Selecciona el tipo de queso que desea', '\nPor favor escribe el número de alguna de las opciones:', '\n1️⃣ Criollo', '2️⃣ Semiduro', '3️⃣ Chicloso', '4️⃣ Requesón', '5️⃣ Pasteurizado'],
+  .addAnswer(['Selecciona el tipo de queso que desea', '\nPor favor escribe el número de alguna de las opciones:', '\n1️⃣ Criollo 20lb', '2️⃣ Semiduro 17lb', '3️⃣ Chicloso 20lb', '4️⃣ Requesón 20lb', '5️⃣ Pasteurizado 20lb'],
     { capture: true }, async (ctx, { state, fallBack, endFlow }) => {
       // Crear una instancia de AttemptHandler
       const attemptHandler = new AttemptHandler(state);
@@ -39,7 +39,6 @@ const cheeseFlow = addKeyword(EVENTS.ACTION)
       const selectedProductName = productResponse[ctx.body];
 
       const priceProduct = await sendPrice(selectedProductName);
-      
 
       await state.update({ product: selectedProductName, price: priceProduct,  tries: 0 });
     })

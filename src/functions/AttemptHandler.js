@@ -1,6 +1,6 @@
 //CONTROL DE INTENTOS
 class AttemptHandler {
-  constructor(state, maxTries = 2) {
+  constructor(state, maxTries = 5) {
     this.state = state;
     this.maxTries = maxTries;
   }

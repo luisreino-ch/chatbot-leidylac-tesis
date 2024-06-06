@@ -1,16 +1,13 @@
 import 'dotenv/config'
 
-
 const API_URL = `${process.env.ME_API_URL}/pedidos`;
-
-
 
 // Consulta para obtener el cliente por celular
 const sendOrderData = async (state) => {
   const response = await fetch(`${process.env.ME_API_URL}/clientes?filters[celular][$eq]=${state.get('phone')}`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': process.env.TOKEN_API// Añade tu token de autenticación si es necesario
+      'Authorization': process.env.TOKEN_API
     }
   });
 

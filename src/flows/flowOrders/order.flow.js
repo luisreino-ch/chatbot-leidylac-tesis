@@ -1,10 +1,12 @@
-import { addKeyword } from "@builderbot/bot";
+import {addKeyword, EVENTS} from "@builderbot/bot";
 import {AttemptHandler} from "../../functions/AttemptHandler.js";
 import { cheeseFlow } from "./cheese.flow.js";
 import { yogurtFlow } from "./yogurt.flow.js";
 import { manjarFlow } from "./manjarFlow.js";
 
-const orderFlow = addKeyword('pedido', { sensitive: true })
+
+
+const orderFlow = addKeyword(EVENTS.ACTION)
   .addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'])
   .addAnswer([
     'Selecciona un producto',
