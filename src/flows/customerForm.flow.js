@@ -1,10 +1,10 @@
-import { addKeyword } from "@builderbot/bot";
+import { addKeyword, EVENTS} from "@builderbot/bot";
 import {AttemptHandler} from "../functions/AttemptHandler.js";
 import { orderFlow } from "./flowOrders/order.flow.js";
 import { sendCustomerData } from "../services/api/clientService.js";
 import { delay } from "../functions/delay.js";  
 
-const customerFormFlow = addKeyword('formulario')
+const customerFormFlow = addKeyword(EVENTS.ACTION)
   .addAnswer([
     'Antes de realizar un pedido, vamos a registrarte como cliente. Por favor, responde a las siguientes preguntas.',
     '\nSi en algún momento deseas cancelar el registro, simplemente escribe la palabra *cancelar* y detendremos el proceso.'
