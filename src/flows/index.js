@@ -7,7 +7,7 @@ import { manjarFlow } from './flowOrders/manjarFlow.js';
 import { finalOrderFlow, listOrderFlow } from './flowOrders/finalOrder.flow.js';
 import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowOrders/editOrder.flow.js';
 import { checkClient } from './checkClient.flow.js';
-
+import { welcomeFlow } from './welcome.flow.js';
 
 
 const flowsAgents = [
@@ -16,6 +16,7 @@ const flowsAgents = [
 ];
 
 const flows = [
+  welcomeFlow,
   customerFormFlow,
   orderFlow,
   cheeseFlow,

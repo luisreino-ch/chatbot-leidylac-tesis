@@ -82,7 +82,6 @@ Como asistente virtual de la fabrica de lácteos LeidyLac, tu principal responsa
 BASE_DE_DATOS="{context}"
 ------
 NOMBRE_DEL_CLIENTE="{customer_name}"
-INTERROGACIÓN_DEL_CLIENTE="{question}"
 
 INSTRUCCIONES PARA LA INTERACCIÓN:
 - No especules ni inventes respuestas si la BASE_DE_DATOS no contiene la información necesaria para responder a una pregunta.
@@ -100,9 +99,27 @@ DIRECTRICES PARA RESPONDER AL CLIENTE:
 `
 
 
+const PROMPT_DETERMINE = `
+Analiza ta conversación entre el cliente (C) y el asistente (A) para identificar el flujo de interés det cliente.
+FLUJOS DISPONIBLES:
+— ID: PEDIDO: Este flujo se activa cuando el cliente desea realizar un pedido de los productos de la fabrica de lácteos LeidyLac.
+
+Debes responder solo con el ID del flujo. Si no puedes determinarlo o si el cliente muestra interés en otro tema, debes responder 'unknown'.
+ID: 
+`
+
+
 const generatePrompt = (name) =>{
 
   return PROMPT.replaceAll('{customer_name}', name).replaceAll('{context}', DATA_BASE)
 }
 
-export { generatePrompt }
+
+const generatePromptDetermine = () =>{
+  return PROMPT_DETERMINE
+}
+
+
+
+
+export { generatePrompt, generatePromptDetermine }
