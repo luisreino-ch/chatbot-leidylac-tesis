@@ -2,16 +2,28 @@ import { createBot} from '@builderbot/bot'
 import { provider } from './provider/index.js'
 import {flow} from './flows/index.js'
 import { database } from './database/index.js'
+import { emplyeeInstace } from './agents/index.js'
 
 const PORT = process.env.PORT ?? 3008
 
 const main = async () => {
     
-    const { handleCtx, httpServer } = await createBot({
+    const configBot = {
         flow,
         provider,
         database
-    })
+    }
+
+    const configExtra = {
+        extensions:{
+        employeesAddon: emplyeeInstace
+        }
+    }
+
+    const { handleCtx, httpServer } = await createBot(
+        configBot, 
+        configExtra
+    )
 
     provider.server.post(
         '/v1/messages',
