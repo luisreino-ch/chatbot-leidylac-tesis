@@ -1,19 +1,26 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
-//import { run, runDetermine } from "../services/openai/index.js";
-//import { checkClient } from "./checkClient.flow.js";
+//import { initializeEmployees } from "../agents/index.js";
+import { run, runDetermine } from "../services/openai/index.js";
+import { checkClient } from "./checkClient.flow.js";
 
 
-
+/* 
 const welcomeFlow = addKeyword(EVENTS.WELCOME).addAction(async (ctx, ctxFn) => {
   const {state} = ctxFn
-  const pluginAi = ctxFn.extensions.employeesAddon
 
-  /** This function is the one that does the job */
-  /** Determine the flow and retrieva an employee object */
+  // Obtener el nombre del usuario desde el contexto
+  const userName = ctx?.pushName ?? '';
+
+  // Inicializar los empleados con el nombre del usuario
+  const pluginAi = initializeEmployees(userName);
+  ctxFn.extensions.employeesAddon = pluginAi;
+
+  
+  // Determinar el empleado adecuado para manejar la consulta
   const employeeDeterminated = await pluginAi.determine(ctx.body)
 
   if(!employeeDeterminated?.employee){
-      return ctxFn.flowDynamic("No te entiendo bien, ¿podrías reformular tu pregunta?. Recuerda que solo puedo responder preguntas sobre la fábrica de lácteos LeidyLac.")
+      return ctxFn.flowDynamic("No te entiendo bien, ¿podrías reformular tu pregunta?. Recuerda que solo puedo responder preguntas relacionadas con la empresa LeidyLac.")
   }
 
   await state.update({answer:employeeDeterminated.answer})
@@ -23,6 +30,7 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME).addAction(async (ctx, ctxFn) => {
   pluginAi.gotoFlow(employeeDeterminated.employee, ctxFn)
   
 })
+ */
 
 
 
@@ -30,26 +38,30 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME).addAction(async (ctx, ctxFn) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* // Punta de entrada 
+// Punta de entrada 
 const welcomeFlow = addKeyword(EVENTS.WELCOME)
+
+  .addAction(async (ctx, {state, gotoFlow} ) => {
+    try {
+      const history = (state.getMyState()?.history ?? []) 
+      const ai = await runDetermine(history)
+
+      console.log(`[QUE FLUJO QUIERE]:`, ai.toLowerCase())
+
+      if(ai.toLowerCase().includes('unknown')){
+        return
+      }
+
+      if(ai.toLowerCase().includes('pedido')){
+        return gotoFlow(checkClient)
+      }
+
+
+    } catch (error) {
+      console.log(`[ERROR]:`, error)
+      return
+    }
+  })
 
   .addAction(async (ctx, {flowDynamic, state}) =>{
     
@@ -83,7 +95,7 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
       console.log(`[ERROR]:`, error)
     }
     
-  }) */
+  })
 
 
 export { welcomeFlow };

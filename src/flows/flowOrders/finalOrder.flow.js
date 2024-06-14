@@ -5,31 +5,32 @@ import { delay } from "../../functions/delay.js";
 import { editOrderFlow } from "./editOrder.flow.js";
 
 const listOrderFlow = addKeyword(EVENTS.ACTION) 
-  .addAnswer('🛒 *Resumen del Pedido* 🛒', null, async(ctx, { state, flowDynamic, gotoFlow }) => {
+.addAnswer('🛒 *Resumen del Pedido* 🛒', null, async(ctx, { state, flowDynamic, gotoFlow }) => {
 
-    let order = state.get('order') || [];
-    
+  let order = state.get('order') || [];
+  
 
-    let summary = "";
-    let total = 0;
-    /* order.forEach((item, index) => {
-        summary += `${index + 1}. Producto: *${item.product}* - Unidades: *${item.quantity}* - Precio: *${item.price}*\n`;
-    });
-    */
-    order.forEach((item, index) => {
-      summary += `${index + 1}. Producto: *${item.product}*\n    Unidades: *${item.quantity}*\n    Precio: *$${item.price}*\n`;
-      total += item.quantity * item.price;
-    });
+  let summary = "";
+  let total = 0;
+  /* order.forEach((item, index) => {
+      summary += `${index + 1}. Producto: *${item.product}* - Unidades: *${item.quantity}* - Precio: *${item.price}*\n`;
+  });
+  */
+  order.forEach((item, index) => {
+    let subtotal = item.quantity * item.price;  
+    summary += `${index + 1}. Producto: *${item.product}*\n    Unidades: *${item.quantity}*\n    Precio: *$${item.price}*\n  Subtotal: *$${subtotal.toFixed(2)}*\n`;
+    total += subtotal;
+  });
 
-    summary += `\n*Total del Pedido: $${total.toFixed(2)}*`;
+  summary += `\n*Total del Pedido: $${total.toFixed(2)}*`;
 
-    await state.update({ detailsOrder: summary, phone: ctx.from });
+  await state.update({ detailsOrder: summary, phone: ctx.from });
 
-    // Redireccionar al flujo finalOrderFlow
-    await flowDynamic(`${summary}`)
-    return gotoFlow(finalOrderFlow)
-    
-  })
+  // Redireccionar al flujo finalOrderFlow
+  await flowDynamic(`${summary}`)
+  return gotoFlow(finalOrderFlow)
+  
+})
 
 
 const finalOrderFlow = addKeyword(EVENTS.ACTION) 
@@ -39,7 +40,7 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({ order: [], tries: 0 });
+      await state.update({ order: [], history: [], tries: 0 });
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -48,22 +49,21 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
       // Manejo de intentos fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({ order: [], tries: 0 });
+        await state.update({ order: [], history: [],  tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
     }
 
+    await state.update({ order: [], history: [], tries: 0 });
+
     if (ctx.body.toLowerCase() === '1') {
-      await state.update({ order: [], tries: 0 });
       console.log('Pedido confirmado')
 
     }else if (ctx.body.toLowerCase() === '2') {
       return gotoFlow(editOrderFlow);
     }
     else if (ctx.body.toLowerCase() === 'no') {
-      // Limpiar el array de pedidos
-      await state.update({ order: [], tries: 0 });
       return endFlow('❌ Pedido cancelado con éxito.')
     }
 

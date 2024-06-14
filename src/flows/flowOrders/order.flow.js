@@ -22,7 +22,7 @@ const orderFlow = addKeyword(EVENTS.ACTION)
     
     // Verificador de cancelación
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({ order: [], tries: 0 });
+      await state.update({ order: [], history: [], tries: 0 });
       return endFlow('Pedido, cancelado con éxito.');
     }
     // Verificador de respuesta válida y de intentos 
@@ -30,13 +30,13 @@ const orderFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({ order: [], tries: 0 });
+        await state.update({ order: [], history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
     }
     
-    await state.update({ tries: 0 });
+    await state.update({ history: [], tries: 0 });
 
     switch (ctx.body) {
       case "1":

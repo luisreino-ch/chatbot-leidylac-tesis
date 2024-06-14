@@ -18,7 +18,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     
     // Verificador de cancelación
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({ tries: 0 });
+      await state.update({ history: [], tries: 0 });
       return endFlow('Registro cancelado con éxito.');
     }
     // Verificador de respuesta válida y de intentos 
@@ -26,7 +26,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({ tries: 0 });
+        await state.update({ history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor, escribe un nombre válido.');
@@ -44,7 +44,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({ tries: 0 });
+      await state.update({ history: [], tries: 0 });
       return endFlow('Registro cancelado con éxito.');
     }
 
@@ -53,7 +53,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({ tries: 0 });
+        await state.update({ history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor, escribe una ciudad válida, solo se pueden ingresar ciudades del Ecuador.');
@@ -74,7 +74,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({ tries: 0 });
+      await state.update({ history: [], tries: 0 });
       return endFlow('Registro cancelado con éxito.');
     }
 
@@ -89,7 +89,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({ tries: 0 });
+        await state.update({ history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor, selecciona una de las opciones válidas');
@@ -106,7 +106,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({ tries: 0 });
+      await state.update({ history: [], tries: 0 });
       return endFlow('Registro, cancelado con éxito.');
     }
 
@@ -115,20 +115,20 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({ tries: 0 });
+        await state.update({ history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
     }
 
     if (ctx.body.toLowerCase() === 'si') {
-      await state.update({ tries: 0 });
+      await state.update({ history: [], tries: 0 });
 
       console.log('Registro confirmado');
 
     } else if (ctx.body.toLowerCase() === 'no') {
       // Limpiar el array de pedidos
-      await state.update({ tries: 0 });
+      await state.update({ history: [], tries: 0 });
       return endFlow('❌ Registro, cancelado con éxito.');
     }
 

@@ -19,12 +19,14 @@ const sendOrderData = async (state) => {
   const client = clientData.data[0];
 
 
+
   const idClient = client.id;
   const nameClient = client.attributes.nombre;
   const cityClient = client.attributes.ciudad;
   const phoneClient = client.attributes.celular;
   const detailsOrder = state.get('detailsOrder');
   //const detallesPedido = pedido.map(item => `Producto: ${item.producto}, Unidades: ${item.cantidad}`).join('; ');
+
   
   const orderData = {
     data: {

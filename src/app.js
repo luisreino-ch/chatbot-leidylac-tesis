@@ -2,7 +2,7 @@ import { createBot} from '@builderbot/bot'
 import { provider } from './provider/index.js'
 import {flow} from './flows/index.js'
 import { database } from './database/index.js'
-import { emplyeeInstace } from './agents/index.js'
+import { initializeEmployees } from './agents/index.js'
 
 const PORT = process.env.PORT ?? 3008
 
@@ -16,7 +16,7 @@ const main = async () => {
 
     const configExtra = {
         extensions:{
-        employeesAddon: emplyeeInstace
+        employeesAddon: initializeEmployees
         }
     }
 

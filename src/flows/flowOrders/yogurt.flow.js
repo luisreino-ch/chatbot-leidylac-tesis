@@ -13,7 +13,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({order: [], tries: 0});
+      await state.update({order: [], history: [], tries: 0});
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -22,7 +22,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({order: [], tries: 0});
+        await state.update({order: [], history: [], tries: 0});
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
@@ -31,11 +31,11 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     }
 
     const productResponse = {
-      '1': 'Yogur de Frutilla',
-      '2': 'Yogur de Mora',
-      '3': 'Yogur de Piña',
-      '4': 'Yogur de Durazno',
-      '5': 'Yogur de Guanábana'
+      '1': 'Yogurt de Frutilla',
+      '2': 'Yogurt de Mora',
+      '3': 'Yogurt de Piña',
+      '4': 'Yogurt de Durazno',
+      '5': 'Yogurt de Guanábana'
     };
 
     await state.update({ flavor: productResponse[ctx.body], tries: 0})
@@ -50,7 +50,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
     
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({order: [], tries: 0});
+      await state.update({order: [], history: [], tries: 0});
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -59,7 +59,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({order: [], tries: 0});
+        await state.update({order: [], history: [], tries: 0});
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
@@ -89,7 +89,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     await state.update({ quantity: ctx.body })
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({order: [], tries: 0});
+      await state.update({order: [], history: [], tries: 0});
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -100,7 +100,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({order: [], tries: 0});
+        await state.update({order: [], history: [], tries: 0});
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor escribe una cantidad válida. Solo se pueden hacer pedidos de 1 a 100 unidades.');
@@ -123,7 +123,7 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({order: [], tries: 0});
+      await state.update({order: [], history: [], tries: 0});
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -132,19 +132,19 @@ const yogurtFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({order: [], tries: 0});
+        await state.update({order: [], history: [], tries: 0});
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
     }
 
+    await state.update({history: [], tries: 0})
+    
     // Redireccionar a otros flujos
     if (ctx.body.toLowerCase() === 'si') {
-      await state.update({tries: 0})
       return gotoFlow(orderFlow)
     }
     else if (ctx.body.toLowerCase() === 'no') {
-      await state.update({tries: 0})
       return gotoFlow(listOrderFlow)
     }
 
@@ -163,7 +163,7 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
     await state.update({ quantity: ctx.body })
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({order: [], tries: 0});
+      await state.update({order: [], history: [], tries: 0});
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -173,7 +173,7 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({order: [], tries: 0});
+        await state.update({order: [], history: [], tries: 0});
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor escribe una cantidad válida. Solo se pueden hacer pedidos de 1 a 100 unidades.');
@@ -196,7 +196,7 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
     const attemptHandler = new AttemptHandler(state);
 
     if (ctx.body.toLowerCase() === 'cancelar') {
-      await state.update({order: [], tries: 0});
+      await state.update({order: [], history: [], tries: 0});
       return endFlow('Pedido cancelado con éxito.')
     }
 
@@ -205,20 +205,20 @@ const yogurtPackFlow = addKeyword(EVENTS.ACTION)
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
-        await state.update({order: [], tries: 0});
+        await state.update({order: [], history: [], tries: 0});
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
       return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
     }
 
-      if (ctx.body.toLowerCase() === 'si') {
-        await state.update({tries: 0})
-        return gotoFlow(orderFlow)
-      }
-      else if (ctx.body.toLowerCase() === 'no') {
-        await state.update({tries: 0})
-        return gotoFlow(listOrderFlow)
-      }
+    await state.update({history: [], tries: 0})
+    
+    if (ctx.body.toLowerCase() === 'si') {
+      return gotoFlow(orderFlow)
+    }
+    else if (ctx.body.toLowerCase() === 'no') {
+      return gotoFlow(listOrderFlow)
+    }
 
     })  
 
