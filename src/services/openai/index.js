@@ -22,7 +22,7 @@ const callOpenAI = async (prompt, history) => {
         // Solo incluir los últimos 3 mensajes del historial para ahorrar tokens
         ...history.slice(-3)
       ],
-      temperature: 0.7,
+      temperature: 0.8,
       max_tokens: 300,  // Limitar el número de tokens en la respuesta
       top_p: 1,
       frequency_penalty: 0,
@@ -41,7 +41,9 @@ const callOpenAI = async (prompt, history) => {
 };
 
 const run = async (name, history) => {
-  const prompt = generatePrompt(name);
+  console.log("HISTORIAL ANTES DE ENTRAR AL MOTOR : ", history)
+  const greetingStatus = history.length === 0 ? false : true;
+  const prompt = generatePrompt(name, greetingStatus);
   console.log(`[PROMPT]:`, prompt);
   return await callOpenAI(prompt, history);
 };

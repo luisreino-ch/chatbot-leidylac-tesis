@@ -35,9 +35,6 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME).addAction(async (ctx, ctxFn) => {
 
 
 
-
-
-
 // Punta de entrada 
 const welcomeFlow = addKeyword(EVENTS.WELCOME)
 
@@ -53,6 +50,7 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
       }
 
       if(ai.toLowerCase().includes('pedido')){
+        await state.update({history: null})
         return gotoFlow(checkClient)
       }
 

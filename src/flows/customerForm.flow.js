@@ -12,13 +12,14 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
   .addAnswer('¿Cuál es tu nombre completo?', { capture: true }, async (ctx, { state, endFlow, fallBack }) => {
     
     const fullNameRegex = /^[A-Za-zÁÉÍÓÚáéíóú]+(\s[A-Za-zÁÉÍÓÚáéíóú]+)+$/;
-    
     // Crear una instancia de AttemptHandler
     const attemptHandler = new AttemptHandler(state);
     
     // Verificador de cancelación
     if (ctx.body.toLowerCase() === 'cancelar') {
+      console.log(state.get('history'));
       await state.update({ history: [], tries: 0 });
+      console.log(state.get('history'));
       return endFlow('Registro cancelado con éxito.');
     }
     // Verificador de respuesta válida y de intentos 

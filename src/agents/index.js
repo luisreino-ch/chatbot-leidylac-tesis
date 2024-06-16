@@ -56,7 +56,7 @@ const createEmployees = (userName) => [
 
 const initializeEmployees = (userName) => {
   const employeeInstance = new EmployeesClass({
-    model: "gpt-3.5-turbo-16k",
+    model: "gpt-3.5-turbo",
     temperature: 0,
     max_tokens: 256,
     apiKey: process.env.OPENAI_API_KEY,

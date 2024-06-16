@@ -1,72 +1,69 @@
 const DATA_BASE = [
-  `LeidyLac es una empresa de lácteos que se especializa en la producción de queso, yogurt y manjar de leche. La empresa se enorgullece de ofrecer productos de alta calidad a precios competitivos.`,
-  
-  `[Aviso importante]: LeidyLac solo realiza pedidos al por mayor.`,
-  
-  `[Queso] LeidyLac ofrece una variedad de quesos, disponibles solo en presentaciones de 20 libras:
+  `LeidyLac es una empresa de lácteos especializada en la producción de queso, yogurt y manjar de leche. La empresa se enorgullece de ofrecer productos de alta calidad a precios competitivos. `,
+  `[Aviso importante]: LeidyLac solo realiza ventas al por mayor`,
+  `[Queso] LeidyLac ofrece una variedad de quesos en presentaciones de 20 libras:
 
-    - **Queso Criollo**
-      - **Precio:** 31$
-      - **Descripción:** 
-        El queso criollo, también conocido como queso suave, es un queso fresco y blando. Tiene una textura suave y húmeda, ideal para desmenuzar o untar. Su sabor es delicado y ligeramente ácido.
-      - **Usos:** 
-        Se utiliza comúnmente en ensaladas, sopas y platos típicos de América Latina. También se puede comer solo o con pan.
+    - Queso Criollo:
+      - Precio: 31$
+      - Descripción: 
+        El queso criollo es un queso fresco y blando, conocido por su textura suave y húmeda. 
+      - Usos: 
+        Ideal para ensaladas, sopas y platos típicos de América Latina. 
 
-    - **Queso Semiduro**
-      - **Precio:** 35,7$
-      - **Descripción:**
-        El queso semiduro tiene una textura firme, pero no tan dura como los quesos madurados. Su sabor es más pronunciado que el de los quesos suaves, con una ligera complejidad.
-      - **Usos:**
-        Versátil en la cocina, se utiliza en sándwiches, gratinados y platos horneados. También es adecuado para consumir solo o con frutas y nueces.
+    - Queso Semiduro:
+      - Precio: 35.7$
+      - Descripción:
+        El queso semiduro tiene una textura firme, pero no tan dura como los quesos madurados por largo tiempo. 
+      - Usos:
+        Versátil en la cocina, perfecto para sándwiches, gratinados y platos horneados. 
 
-    - **Queso Chicloso**
-      - **Precio:** 42$
-      - **Descripción:**
-        El queso chicloso es elástico y masticable, conocido por su capacidad de derretirse y estirarse. Tiene un sabor suave y lechoso.
-      - **Usos:** 
-        Ideal para pizzas, quesadillas y platos que requieran queso fundido y estirado. También se puede usar en sándwiches.
+    - Queso Chicloso:
+      - Precio: 42$
+      - Descripción:
+        El queso chicloso tiene una textura elástica y masticable, ideal para derretirse y estirarse.
+      - Usos: 
+        Popular en pizzas, quesadillas y platos que requieren queso fundido y estirado.
 
-    - **Queso Requesón**
-      - **Precio:** 13$
-      - **Descripción:**
-        El requesón es un queso fresco y suave con una textura granulosa. Su sabor es suave, ligeramente ácido y cremoso.
-      - **Usos:**
-        Se utiliza en postres como cheesecakes, en rellenos para pastas y en ensaladas. También se puede consumir solo, con frutas o mermeladas.
+    - Queso Requesón:
+      - Precio: 13$
+      - Descripción:
+        El requesón es un queso fresco con una textura granulosa, similar al ricotta. 
+      - Usos:
+        Utilizado en postres, rellenos de pastas, ensaladas y consumido solo con frutas o mermeladas.
 
-    - **Queso Pasteurizado**
-      - **Precio:** 33$
-      - **Descripción:**
-        El queso pasteurizado se elabora con leche pasteurizada, lo que elimina bacterias y prolonga su vida útil. Es seguro para el consumo y tiene un perfil de sabor más suave.
-      - **Usos:**
-        Ideal para una variedad de aplicaciones culinarias, tanto en platos fríos como calientes.
+    - Queso Pasteurizado:
+      - Precio: 33$
+      - Descripción:
+        El queso pasteurizado se elabora con leche pasteurizada, lo que prolonga su vida útil y lo hace más seguro para el consumo.
+      - Usos:
+        Apto para una amplia variedad de platos, gracias a su perfil de sabor suave.
   `,
-  
-  `[Yogurt] LeidyLac ofrece yogurt natural de diferentes frutas, disponible en:
+  `[Yogurt] LeidyLac ofrece yogurt natural en presentaciones de 1 Litro, 2 Litros y packs de 10 unidades de 150 ml (Aviso los sabores que viene en el pack de 10 unidades son variados):
 
-    - Presentaciones:
-      - 1 Litro: 1,75$
-      - 2 Litros: 3,5$
-      - Pack de 10 unidades de 150 ml (Aviso: Los sabores de las unidades del pack vienen de forma aleatoria): 3,5$ 
-    - **Descripción:**
-      El yogurt natural es un producto lácteo fermentado, rico en proteínas, calcio y probióticos. Su sabor es ligeramente ácido y su textura cremosa.
-    - **Usos:**
-      Se puede consumir solo, con frutas, cereales, miel, o en salsas y aderezos. También es común en postres y batidos.
-    - **Sabores del Pack:**
+    - Precio:
+      - 1.75$ por 1 Litro
+      - 3.5$ por 2 Litros
+      - 3.5$ por el pack de 10 unidades de 150 ml
+    - Descripción:
+      El yogurt natural de frutas es un producto fermentado rico en proteínas, calcio y probióticos. 
+    - Usos:
+      Se consume solo, con frutas, cereales, miel y mucho mas. También es ingrediente común en postres y batidos.
+    - Sabores:
       - Frutilla
       - Mora
       - Piña
       - Durazno
       - Guanábana
   `,
-  
-  `[Manjar de Leche] LeidyLac ofrece manjar de leche en presentaciones de:
+  `[Manjar de Leche] LeidyLac ofrece manjar de leche en presentaciones de 110 gramos y 250 gramos:
 
-    - 110 gramos: 0.5$
-    - 250 gramos: 1$
-    - **Descripción:**
-      El manjar de leche es un dulce tradicional de América Latina, elaborado con leche, azúcar y vainilla. Tiene una textura suave y cremosa, con un sabor dulce y ligeramente caramelizado.
-    - **Usos:**
-      Se utiliza como relleno de postres como alfajores, tortas y pasteles. También se puede consumir solo o con galletas, pan o frutas.
+    - Precio:
+      - 0.5$ por 110 gramos
+      - 1$ por 250 gramos
+    - Descripción:
+      El manjar de leche es un dulce tradicional de América Latina, elaborado con leche, azúcar y vainilla. 
+    - Usos:
+      Utilizado en rellenos de postres como alfajores, tortas y pasteles. También se consume solo o con galletas, pan o frutas.
   `
 ].join('\n');
 
