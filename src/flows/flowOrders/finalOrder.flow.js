@@ -55,15 +55,17 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
       return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
     }
 
-    await state.update({ order: [], history: [], tries: 0 });
+    
 
     if (ctx.body.toLowerCase() === '1') {
+      await state.update({ order: [], history: [], tries: 0 });
       console.log('Pedido confirmado')
 
     }else if (ctx.body.toLowerCase() === '2') {
       return gotoFlow(editOrderFlow);
     }
-    else if (ctx.body.toLowerCase() === 'no') {
+    else if (ctx.body.toLowerCase() === '3') {
+      await state.update({ order: [], history: [], tries: 0 });
       return endFlow('❌ Pedido cancelado con éxito.')
     }
 

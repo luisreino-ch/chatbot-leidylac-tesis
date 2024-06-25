@@ -64,14 +64,20 @@ const DATA_BASE = [
       El manjar de leche es un dulce tradicional de América Latina, elaborado con leche, azúcar y vainilla. 
     - Usos:
       Utilizado en rellenos de postres como alfajores, tortas y pasteles. También se consume solo o con galletas, pan o frutas.
+  `,
   `
+  [Información sobre la empresa]:
+    - 
+  
+  `
+
 ].join('\n')
 
 const PROMPT_DETERMINE = `
 Analiza la conversación entre el cliente (C) y el asistente (A) para identificar el flujo de interés del cliente.
 
 FLUJOS DISPONIBLES:
-— ID: PEDIDO: Este flujo se activa solo cuando el cliente expresa claramente la intención de hacer un pedido de los productos de la fábrica de lácteos LeidyLac. Activa este flujo únicamente si el cliente indica explícitamente que desea realizar una compra o formalizar un pedido. No actives este flujo si el cliente solo está preguntando por precios o detalles de los productos.
+— ID: PEDIDO: Activa este flujo únicamente si el cliente indica explícitamente que desea realizar una compra o formalizar un pedido de productos de la fábrica de lácteos LeidyLac. No actives este flujo si el cliente solo está preguntando por precios o detalles de los productos.
 
 Debes responder solo con el ID del flujo correspondiente. Si no puedes determinar el flujo o si el cliente muestra interés en otro tema, debes responder 'unknown'.
 ID:
@@ -89,12 +95,14 @@ BASE_DE_DATOS="{context}"
 NOMBRE_DEL_CLIENTE="{customer_name}"
 
 INSTRUCCIONES PARA LA INTERACCIÓN:
-- No especules ni inventes respuestas si la BASE_DE_DATOS no contiene la información necesaria.
-- Si no tienes la respuesta o la BASE_DE_DATOS no proporciona suficientes detalles, pide amablemente que reformule su pregunta.
-- Antes de responder, asegúrate de que la información necesaria esté en la BASE_DE_DATOS.
+- No inventes respuestas ni especules. Responde únicamente con la información proporcionada en la BASE_DE_DATOS.
+- Determina si la información solicitada por el cliente está disponible en la BASE_DE_DATOS.
+  - Si la información está disponible, establece la variable INFO como 'encontrado'.
+  - Si la información no está disponible, establece la variable INFO como 'no encontrado'.
+INFO:
+
 
 DIRECTRICES PARA RESPONDER AL CLIENTE:
-- Tu objetivo es responder las dudas y persuadir al cliente para que realice un pedido.
 - Si el cliente muestra interés en un producto, indícale que primero debe hacer un pedido.
 - Utiliza el NOMBRE_DEL_CLIENTE para personalizar tus respuestas.
 - No menciones ni sugieras productos que LeidyLac no ofrece.

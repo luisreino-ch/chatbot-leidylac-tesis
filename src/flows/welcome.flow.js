@@ -1,44 +1,20 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
-//import { initializeEmployees } from "../agents/index.js";
 import { run, runDetermine } from "../services/openai/index.js";
 import { checkClient } from "./checkClient.flow.js";
-
-
-/* 
-const welcomeFlow = addKeyword(EVENTS.WELCOME).addAction(async (ctx, ctxFn) => {
-  const {state} = ctxFn
-
-  // Obtener el nombre del usuario desde el contexto
-  const userName = ctx?.pushName ?? '';
-
-  // Inicializar los empleados con el nombre del usuario
-  const pluginAi = initializeEmployees(userName);
-  ctxFn.extensions.employeesAddon = pluginAi;
-
-  
-  // Determinar el empleado adecuado para manejar la consulta
-  const employeeDeterminated = await pluginAi.determine(ctx.body)
-
-  if(!employeeDeterminated?.employee){
-      return ctxFn.flowDynamic("No te entiendo bien, ¿podrías reformular tu pregunta?. Recuerda que solo puedo responder preguntas relacionadas con la empresa LeidyLac.")
-  }
-
-  await state.update({answer:employeeDeterminated.answer})
-
-  console.log(`[EMPLOYEE]:`, employeeDeterminated.employee)
-
-  pluginAi.gotoFlow(employeeDeterminated.employee, ctxFn)
-  
-})
- */
-
-
+import { checkBlacklist } from "../services/api/checkBlacklist.js";
 
 
 // Punta de entrada 
 const welcomeFlow = addKeyword(EVENTS.WELCOME)
 
-  .addAction(async (ctx, {state, gotoFlow} ) => {
+  .addAction(async (ctx, {state, gotoFlow, endFlow  } ) => {
+
+    const blacklistUser = await checkBlacklist(ctx);
+
+    if (blacklistUser) {
+        return endFlow()
+    }
+
     try {
       const history = (state.getMyState()?.history ?? []) 
       const ai = await runDetermine(history)
@@ -75,6 +51,9 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
       })
 
       const largeResponse = await run(name, newHistory)
+
+      
+
       const chunks = largeResponse.split(/(?<!\d)\.\s+/g);
       
       for(const chunk of chunks){
@@ -97,3 +76,5 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
 
 
 export { welcomeFlow };
+
+

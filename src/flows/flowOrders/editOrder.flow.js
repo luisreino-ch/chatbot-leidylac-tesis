@@ -1,5 +1,5 @@
 import { addKeyword, EVENTS } from "@builderbot/bot";
-import { finalOrderFlow, listOrderFlow } from "./finalOrder.flow.js";
+import { listOrderFlow } from "./finalOrder.flow.js";
 import { orderFlow } from "./order.flow.js";
 import { AttemptHandler } from "../../functions/AttemptHandler.js";
 
@@ -9,14 +9,14 @@ const editOrderFlow = addKeyword(EVENTS.ACTION)
 
     if (ctx.body.toLowerCase() === 'cancelar') {
       await state.update({ tries: 0 });
-      return gotoFlow(finalOrderFlow);
+      return gotoFlow(listOrderFlow);
     }
 
     if (!["1", "2", "3"].includes(ctx.body)) {
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
         await state.update({ tries: 0 });
-        return gotoFlow(finalOrderFlow);
+        return gotoFlow(listOrderFlow);
       }
       return fallBack('Por favor selecciona una opción válida: 1️⃣, 2️⃣ o 3️⃣.');
     }
@@ -40,7 +40,7 @@ const modifyQuantityFlow = addKeyword(EVENTS.ACTION)
 
     if (ctx.body.toLowerCase() === 'cancelar') {
       await state.update({ tries: 0 });
-      return gotoFlow(finalOrderFlow);
+      return gotoFlow(listOrderFlow);
     }
 
     if (!order[parseInt(ctx.body) - 1]) {
@@ -60,7 +60,7 @@ const modifyQuantityFlow = addKeyword(EVENTS.ACTION)
 
     if (ctx.body.toLowerCase() === 'cancelar') {
       await state.update({ tries: 0 });
-      return gotoFlow(finalOrderFlow);
+      return gotoFlow(listOrderFlow);
     }
 
     const numUnits = /^(100|[1-9][0-9]?$)$/;
@@ -89,7 +89,7 @@ const removeProductFlow = addKeyword(EVENTS.ACTION)
 
     if (ctx.body.toLowerCase() === 'cancelar') {
       await state.update({ tries: 0 });
-      return gotoFlow(finalOrderFlow);
+      return gotoFlow(listOrderFlow);
     }
 
     if (!order[parseInt(ctx.body) - 1]) {

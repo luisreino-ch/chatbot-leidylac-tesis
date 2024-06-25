@@ -22,7 +22,7 @@ const callOpenAI = async (prompt, history) => {
         // Solo incluir los últimos 3 mensajes del historial para ahorrar tokens
         ...history.slice(-3)
       ],
-      temperature: 0.8,
+      temperature: 0.7,
       max_tokens: 300,  // Limitar el número de tokens en la respuesta
       top_p: 1,
       frequency_penalty: 0,

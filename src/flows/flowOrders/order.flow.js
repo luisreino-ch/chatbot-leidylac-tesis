@@ -4,10 +4,14 @@ import { cheeseFlow } from "./cheese.flow.js";
 import { yogurtFlow } from "./yogurt.flow.js";
 import { manjarFlow } from "./manjarFlow.js";
 
-
+const orderInitialFlow = addKeyword(EVENTS.ACTION)
+.addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'], 
+  null, async (ctx, { gotoFlow }) => {
+    return gotoFlow(orderFlow);
+  }
+)
 
 const orderFlow = addKeyword(EVENTS.ACTION)
-  .addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'])
   .addAnswer([
     'Selecciona un producto',
     '\nPor favor escribe el número de alguna de las opciones:',
@@ -48,4 +52,4 @@ const orderFlow = addKeyword(EVENTS.ACTION)
     }
   });
 
-export { orderFlow };
+export { orderFlow, orderInitialFlow};
