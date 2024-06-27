@@ -1,6 +1,6 @@
 import { addKeyword, EVENTS} from "@builderbot/bot";
 import {AttemptHandler} from "../functions/AttemptHandler.js";
-import { orderFlow } from "./flowOrders/order.flow.js";
+import { orderInitialFlow } from "./flowOrders/order.flow.js";
 import { sendCustomerData } from "../services/api/clientService.js";
 import { delay } from "../functions/delay.js";  
 
@@ -143,7 +143,7 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     await delay(1000);
     await flowDynamic('✅ ¡Registro exitoso! Tu información ha sido guardada con éxito.');
     // flujo pedido
-    return gotoFlow(orderFlow);
+    return gotoFlow(orderInitialFlow);
     
   });
 

@@ -37,6 +37,8 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
     }
   })
 
+  
+
   .addAction(async (ctx, {flowDynamic, state}) =>{
     
     try {
@@ -51,8 +53,6 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
       })
 
       const largeResponse = await run(name, newHistory)
-
-      
 
       const chunks = largeResponse.split(/(?<!\d)\.\s+/g);
       

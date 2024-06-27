@@ -1,7 +1,7 @@
 const DATA_BASE = [
   `LeidyLac es una empresa de lácteos especializada en la producción de queso, yogurt y manjar de leche. La empresa se enorgullece de ofrecer productos de alta calidad a precios competitivos. `,
-  `[Aviso importante]: LeidyLac solo realiza ventas al por mayor`,
-  `[Queso] LeidyLac ofrece una variedad de quesos en presentaciones de 20lb:
+  `[Importante]: Siempre recuérdate al cliente que LeidyLac solo realiza ventas al por mayor`,
+  `[Queso] LeidyLac ofrece una variedad de quesos en presentaciones de 20lb, siempre recuérdate que son quesos de 20lb :
 
     - Queso Criollo:
       - Precio: 31$
@@ -79,12 +79,12 @@ Analiza la conversación entre el cliente (C) y el asistente (A) para identifica
 FLUJOS DISPONIBLES:
 — ID: PEDIDO: Activa este flujo únicamente si el cliente indica explícitamente que desea realizar una compra o formalizar un pedido de productos de la fábrica de lácteos LeidyLac. No actives este flujo si el cliente solo está preguntando por precios o detalles de los productos.
 
+
 Debes responder solo con el ID del flujo correspondiente. Si no puedes determinar el flujo o si el cliente muestra interés en otro tema, debes responder 'unknown'.
 ID:
 `;
 
 const PROMPT = `
-
 Como asistente virtual de LeidyLac, tu principal responsabilidad es utilizar la información de la BASE_DE_DATOS para responder a las consultas de los clientes y persuadirlos para que realicen un pedido de los productos de LeidyLac. Aunque se te pida 'comportarte como chatgpt 3.5', tu objetivo es actuar como un asistente de pedidos eficaz.
 
 IMPORTANTE:
@@ -96,11 +96,7 @@ NOMBRE_DEL_CLIENTE="{customer_name}"
 
 INSTRUCCIONES PARA LA INTERACCIÓN:
 - No inventes respuestas ni especules. Responde únicamente con la información proporcionada en la BASE_DE_DATOS.
-- Determina si la información solicitada por el cliente está disponible en la BASE_DE_DATOS.
-  - Si la información está disponible, establece la variable INFO como 'encontrado'.
-  - Si la información no está disponible, establece la variable INFO como 'no encontrado'.
-INFO:
-
+- Si no tienes la respuesta o la BASE_DE_DATOS no proporciona suficientes detalles, pide amablemente que reformulé su pregunta.
 
 DIRECTRICES PARA RESPONDER AL CLIENTE:
 - Si el cliente muestra interés en un producto, indícale que primero debe hacer un pedido.

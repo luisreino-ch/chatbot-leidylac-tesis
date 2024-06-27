@@ -8,6 +8,8 @@ import { finalOrderFlow, listOrderFlow } from './flowOrders/finalOrder.flow.js';
 import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowOrders/editOrder.flow.js';
 import { checkClient } from './checkClient.flow.js';
 import { welcomeFlow } from './welcome.flow.js';
+import { byeFlow } from './bye.flow.js';
+import { voiceNote } from './voiceNote.flow.js';
 
 
 const flowsAgents = [
@@ -29,7 +31,8 @@ const flows = [
   editOrderFlow,
   modifyQuantityFlow,
   removeProductFlow,
-  
+  byeFlow,
+  voiceNote
 ];
 
 const flow = createFlow([...flowsAgents, ...flows])
