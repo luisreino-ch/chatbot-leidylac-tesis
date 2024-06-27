@@ -1,8 +1,17 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
+import { checkBlacklist } from "../services/api/checkBlacklist.js";
 
-const voiceNote = addKeyword(EVENTS.VOICE_NOTE)
+const voiceNoteFlow = addKeyword(EVENTS.VOICE_NOTE)
+  .addAction( async(ctx, { endFlow }) => {
+
+    const blacklistUser = await checkBlacklist(ctx);
+
+    if (blacklistUser) {
+        return endFlow()
+    }
+  })
   .addAnswer('Por favor escribe un mensaje', null, async (ctx, { endFlow }) => {
     return endFlow()
   })
 
-export { voiceNote };
+export { voiceNoteFlow };

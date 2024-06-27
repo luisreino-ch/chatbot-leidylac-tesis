@@ -1,6 +1,6 @@
 import {addKeyword} from "@builderbot/bot";
 import { checkClientService } from "../services/api/checkClientService.js";
-import { orderInitialFlow } from "./flowOrders/order.flow.js";
+import { orderInitialFlow } from "./flowsOrders/order.flow.js";
 import { customerFormFlow } from "./customerForm.flow.js";
 import { checkBlacklist } from "../services/api/checkBlacklist.js";
 

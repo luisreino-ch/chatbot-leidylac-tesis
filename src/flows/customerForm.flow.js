@@ -1,6 +1,6 @@
 import { addKeyword, EVENTS} from "@builderbot/bot";
 import {AttemptHandler} from "../functions/AttemptHandler.js";
-import { orderInitialFlow } from "./flowOrders/order.flow.js";
+import { orderInitialFlow } from "./flowsOrders/order.flow.js";
 import { sendCustomerData } from "../services/api/clientService.js";
 import { delay } from "../functions/delay.js";  
 

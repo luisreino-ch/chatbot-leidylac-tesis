@@ -1,15 +1,16 @@
 import {createFlow} from '@builderbot/bot'
 import { customerFormFlow } from './customerForm.flow.js';
-import { orderInitialFlow, orderFlow} from './flowOrders/order.flow.js';
-import { cheeseFlow } from './flowOrders/cheese.flow.js';
-import { yogurtFlow, yogurtPackFlow } from './flowOrders/yogurt.flow.js';
-import { manjarFlow } from './flowOrders/manjarFlow.js';
-import { finalOrderFlow, listOrderFlow } from './flowOrders/finalOrder.flow.js';
-import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowOrders/editOrder.flow.js';
+import { orderInitialFlow, orderFlow} from './flowsOrders/order.flow.js';
+import { cheeseFlow } from './flowsOrders/cheese.flow.js';
+import { yogurtFlow, yogurtPackFlow } from './flowsOrders/yogurt.flow.js';
+import { manjarFlow } from './flowsOrders/manjarFlow.js';
+import { finalOrderFlow, listOrderFlow } from './flowsOrders/finalOrder.flow.js';
+import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowsOrders/editOrder.flow.js';
 import { checkClient } from './checkClient.flow.js';
 import { welcomeFlow } from './welcome.flow.js';
 import { byeFlow } from './bye.flow.js';
-import { voiceNote } from './voiceNote.flow.js';
+import { voiceNoteFlow } from './voiceNote.flow.js';
+import { addressFlow } from './address.flow.js';
 
 
 const flowsAgents = [
@@ -32,7 +33,8 @@ const flows = [
   modifyQuantityFlow,
   removeProductFlow,
   byeFlow,
-  voiceNote
+  voiceNoteFlow,
+  addressFlow
 ];
 
 const flow = createFlow([...flowsAgents, ...flows])
