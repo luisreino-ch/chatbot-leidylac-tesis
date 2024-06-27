@@ -13,7 +13,7 @@ const contactFlow = addKeyword('contacto')
 
   })
 
-  .addAnswer(['Contacto de un administradora de la empresa: '], null, async (ctx, { endFlow, provider}) => {
+  .addAnswer(['Contacto de un administrador de la empresa: '], null, async (ctx, { endFlow, provider}) => {
 
 
     const vcard = 
