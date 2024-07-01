@@ -13,15 +13,15 @@ const contactFlow = addKeyword('contacto')
 
   })
 
-  .addAnswer(['Contacto de un administrador de la empresa: '], null, async (ctx, { endFlow, provider}) => {
+  .addAnswer(['Aquí tienes el contacto de un administrador de la empresa LeidyLac:'], null, async (ctx, { endFlow, provider}) => {
 
 
     const vcard = 
             'BEGIN:VCARD\n' // metadata of the contact card
             + 'VERSION:3.0\n' 
             + 'FN:Katherine Chuchuca\n' // full name
-            + 'ORG:LeidyLac;\n' // the organization of the contact
-            + 'TEL;type=CELL;type=VOICE;waid=911234567890:+91 12345 67890\n' // WhatsApp ID + phone number
+            + 'ORG:Katherine Chuchuca;\n' // the organization of the contact
+            + 'TEL;type=CELL;type=VOICE;waid=593980643995:+593980643995\n' // WhatsApp ID + phone number
             + 'END:VCARD'
 
     
@@ -32,7 +32,7 @@ const contactFlow = addKeyword('contacto')
       id,
       { 
         contacts: { 
-            displayName: 'katy', 
+            displayName: 'Katherine Chuchuca', 
             contacts: [{ vcard }] 
         }
       }

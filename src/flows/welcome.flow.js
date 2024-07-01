@@ -30,6 +30,8 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
         return gotoFlow(checkClient)
       }
 
+      
+
 
     } catch (error) {
       console.log(`[ERROR]:`, error)

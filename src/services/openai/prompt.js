@@ -1,6 +1,9 @@
-const DATA_BASE = [
-  `LeidyLac es una empresa de lácteos especializada en la producción de queso, yogurt y manjar de leche. La empresa se enorgullece de ofrecer productos de alta calidad a precios competitivos. `,
-  `[Importante]: Siempre recuérdate al cliente que LeidyLac solo realiza ventas al por mayor`,
+import { CombineContexts } from "../api/contextPrompt.js";
+
+
+/* const DATA_BASE = [
+  `LeidyLac es una empresa de lácteos especializada en la producción de queso, yogurt y manjar de leche. La empresa se enorgullece de ofrecer productos de alta calidad a precios competitivos.`,
+  `[Importante]: Siempre recuérdate al cliente que LeidyLac solo realiza ventas al por mayor.`,
   `[Queso] LeidyLac ofrece una variedad de quesos en presentaciones de 20lb, siempre recuérdate que son quesos de 20lb :
 
     - Queso Criollo:
@@ -68,16 +71,18 @@ const DATA_BASE = [
   `
   [Información sobre la empresa]:
     - 
-  
   `
 
-].join('\n')
+].join('\n') */
+
+
+const DATA_BASE = await CombineContexts();
 
 const PROMPT_DETERMINE = `
 Analiza la conversación entre el cliente (C) y el asistente (A) para identificar el flujo de interés del cliente.
 
 FLUJOS DISPONIBLES:
-— ID: PEDIDO: Activa este flujo únicamente si el cliente indica explícitamente que desea realizar una compra o formalizar un pedido de productos de la fábrica de lácteos LeidyLac. No actives este flujo si el cliente solo está preguntando por precios o detalles de los productos.
+— ID: PEDIDO: Activa este flujo únicamente si el cliente indica explícitamente que quiere hacer una compra o formalizar un pedido de productos de la fábrica de lácteos LeidyLac. No actives este flujo si el cliente solo está preguntando por precios o detalles de los productos.
 
 
 Debes responder solo con el ID del flujo correspondiente. Si no puedes determinar el flujo o si el cliente muestra interés en otro tema, debes responder 'unknown'.

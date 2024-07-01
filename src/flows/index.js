@@ -11,6 +11,7 @@ import { welcomeFlow } from './welcome.flow.js';
 import { byeFlow } from './bye.flow.js';
 import { voiceNoteFlow } from './voiceNote.flow.js';
 import { addressFlow } from './address.flow.js';
+import { contactFlow } from './contact.flow.js';
 
 
 const flowsAgents = [
@@ -34,7 +35,8 @@ const flows = [
   removeProductFlow,
   byeFlow,
   voiceNoteFlow,
-  addressFlow
+  addressFlow,
+  contactFlow
 ];
 
 const flow = createFlow([...flowsAgents, ...flows])
