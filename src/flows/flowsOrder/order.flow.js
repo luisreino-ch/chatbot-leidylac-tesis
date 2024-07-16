@@ -5,7 +5,7 @@ import { yogurtFlow } from "./yogurt.flow.js";
 import { manjarFlow } from "./manjarFlow.js";
 
 const orderInitialFlow = addKeyword(EVENTS.ACTION)
-.addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', '\nSi en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'], 
+.addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', 'Si en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'], 
   null, async (ctx, { gotoFlow }) => {
     return gotoFlow(orderFlow);
   }
@@ -17,7 +17,8 @@ const orderFlow = addKeyword(EVENTS.ACTION)
     '\nPor favor escribe el número de alguna de las opciones:',
     '\n1️⃣ Queso',
     '2️⃣ Yogurt',
-    '3️⃣ Manjar de leche'
+    '3️⃣ Manjar de leche',
+    '0️⃣ Cancelar pedido'
   ], 
   { capture: true }, async (ctx, { state, fallBack, gotoFlow, endFlow }) => {
 
@@ -30,14 +31,14 @@ const orderFlow = addKeyword(EVENTS.ACTION)
       return endFlow('Pedido, cancelado con éxito.');
     }
     // Verificador de respuesta válida y de intentos 
-    if (!["1", "2", "3"].includes(ctx.body)) {
+    if (!["1", "2", "3", "0"].includes(ctx.body)) {
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
         await state.update({ order: [], history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
-      return fallBack('Respuesta no válida, por favor selecciona una de las opciones.');
+      return fallBack('Por favor, selecciona una de las opciones válidas.');
     }
     
     await state.update({ history: [], tries: 0 });
@@ -49,6 +50,9 @@ const orderFlow = addKeyword(EVENTS.ACTION)
         return gotoFlow(yogurtFlow);
       case "3":
         return gotoFlow(manjarFlow);
+      case "0":
+        await state.update({ order: [], history: [], tries: 0 });
+        return endFlow('Pedido, cancelado con éxito.');
     }
   });
 

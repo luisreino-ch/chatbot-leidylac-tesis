@@ -4,31 +4,46 @@ import { orderFlow } from "./order.flow.js";
 import { AttemptHandler } from "../../functions/AttemptHandler.js";
 
 const editOrderFlow = addKeyword(EVENTS.ACTION)
-  .addAnswer(['📝 *Edición del Pedido* 📝', '¿Qué deseas hacer?', '\n1️⃣ Agregar productos', '2️⃣ Modificar cantidades', '3️⃣ Eliminar un producto'], { capture: true }, async (ctx, { state, fallBack, gotoFlow }) => {
+  .addAnswer(['📝 *Edición del Pedido* 📝', '¿Qué deseas hacer?', '\n1️⃣ Agregar productos', '2️⃣ Modificar cantidades', '3️⃣ Eliminar un producto', '0️⃣ Cancelar edición'], { capture: true }, async (ctx, { state, fallBack, gotoFlow }) => {
     const attemptHandler = new AttemptHandler(state);
+
+    let order = state.get('order') || [];
 
     if (ctx.body.toLowerCase() === 'cancelar') {
       await state.update({ tries: 0 });
       return gotoFlow(listOrderFlow);
     }
 
-    if (!["1", "2", "3"].includes(ctx.body)) {
+    if (!['1','2','3','0'].includes(ctx.body)) {
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
         await state.update({ tries: 0 });
         return gotoFlow(listOrderFlow);
       }
-      return fallBack('Por favor selecciona una opción válida: 1️⃣, 2️⃣ o 3️⃣.');
+      return fallBack('Por favor, selecciona una de las opciones válidas.');
     }
 
     await state.update({ tries: 0 });
-    if (ctx.body === "1") {
-      return gotoFlow(orderFlow); // Redirigir al flujo de agregar productos
-    } else if (ctx.body === "2") {
-      return gotoFlow(modifyQuantityFlow); // Redirigir al flujo de modificar cantidades
-    } else if (ctx.body === "3") {
-      return gotoFlow(removeProductFlow); // Redirigir al flujo de eliminar productos
+
+    switch (ctx.body) {
+      case '1':
+        return gotoFlow(orderFlow);
+      case '2':
+        if (order.length === 0) {
+          return fallBack('No tienes productos en tu pedido. Por favor agrega productos primero.');
+        }
+        return gotoFlow(modifyQuantityFlow);
+      case '3':
+        if (order.length === 0) {
+          return fallBack('No tienes productos en tu pedido. Por favor agrega productos primero.');
+        }
+        return gotoFlow(removeProductFlow);
+      case '0':
+        return gotoFlow(listOrderFlow);
     }
+
+
+
   });
 
 // Flujo para modificar cantidades

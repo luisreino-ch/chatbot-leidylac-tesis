@@ -1,5 +1,5 @@
 import { addKeyword } from "@builderbot/bot";
-import { checkBlacklist } from "../services/api/checkBlacklist.js";
+import { checkBlacklist } from "../../services/api/checkBlacklistService.js";
 
 
 const byeFlow = addKeyword(['bye', 'adios', 'chao','hasta luego', 'hasta pronto', 'hasta la próxima', 'hasta la vista', 'nos vemos', 'hasta mañana'])
@@ -11,7 +11,8 @@ const byeFlow = addKeyword(['bye', 'adios', 'chao','hasta luego', 'hasta pronto'
         return endFlow()
     }
   })
-  .addAnswer('¡Hasta luego! 😊', null, async (ctx, { endFlow }) => {
+  .addAnswer('¡Hasta luego! 😊', null, async (ctx, {state, endFlow }) => {
+    await state.update({ history: []});
     return endFlow()
   })
 

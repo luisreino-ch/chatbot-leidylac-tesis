@@ -1,79 +1,4 @@
-import { CombineContexts } from "../api/contextPrompt.js";
-
-
-/* const DATA_BASE = [
-  `LeidyLac es una empresa de lácteos especializada en la producción de queso, yogurt y manjar de leche. La empresa se enorgullece de ofrecer productos de alta calidad a precios competitivos.`,
-  `[Importante]: Siempre recuérdate al cliente que LeidyLac solo realiza ventas al por mayor.`,
-  `[Queso] LeidyLac ofrece una variedad de quesos en presentaciones de 20lb, siempre recuérdate que son quesos de 20lb :
-
-    - Queso Criollo:
-      - Precio: 31$
-      - Descripción: 
-        El queso criollo es un queso fresco y blando, conocido por su textura suave y húmeda. 
-      - Usos: 
-        Ideal para ensaladas, sopas y platos típicos de América Latina. 
-
-    - Queso Semiduro:
-      - Precio: 35.7$
-      - Descripción:
-        El queso semiduro tiene una textura firme, pero no tan dura como los quesos madurados por largo tiempo. 
-      - Usos:
-        Versátil en la cocina, perfecto para sándwiches, gratinados y platos horneados. 
-
-    - Queso Chicloso:
-      - Precio: 42$
-      - Descripción:
-        El queso chicloso tiene una textura elástica y masticable, ideal para derretirse y estirarse.
-      - Usos: 
-        Popular en pizzas, quesadillas y platos que requieren queso fundido y estirado.
-
-    - Queso Requesón:
-      - Precio: 13$
-      - Descripción:
-        El requesón es un queso fresco con una textura granulosa, similar al ricotta. 
-      - Usos:
-        Utilizado en postres, rellenos de pastas, ensaladas y consumido solo con frutas o mermeladas.
-
-    - Queso Pasteurizado:
-      - Precio: 33$
-      - Descripción:
-        El queso pasteurizado se elabora con leche pasteurizada, lo que prolonga su vida útil y lo hace más seguro para el consumo.
-      - Usos:
-        Apto para una amplia variedad de platos, gracias a su perfil de sabor suave.
-  `,
-  `[Yogurt] LeidyLac ofrece yogurt natural en presentaciones de 1L, 2L y packs de 10 unidades de 150ml (Aviso los sabores que viene en el pack de 10 unidades son variados):
-
-    - Precio:
-      - 1.75$ por 1L
-      - 3.5$ por 2L
-      - 3.5$ por el pack de 10 unidades de 150ml
-    - Descripción:
-      El yogurt natural de frutas es un producto fermentado rico en proteínas, calcio y probióticos. 
-    - Usos:
-      Se consume solo, con frutas, cereales, miel y mucho mas. También es ingrediente común en postres y batidos.
-    - Sabores:
-      - Frutilla
-      - Mora
-      - Piña
-      - Durazno
-      - Guanábana
-  `,
-  `[Manjar de Leche] LeidyLac ofrece manjar de leche en presentaciones de 110g y 250g:
-
-    - Precio:
-      - 0.5$ por 110g
-      - 1$ por 250g
-    - Descripción:
-      El manjar de leche es un dulce tradicional de América Latina, elaborado con leche, azúcar y vainilla. 
-    - Usos:
-      Utilizado en rellenos de postres como alfajores, tortas y pasteles. También se consume solo o con galletas, pan o frutas.
-  `,
-  `
-  [Información sobre la empresa]:
-    - 
-  `
-
-].join('\n') */
+import { CombineContexts } from "../api/contextPromptService.js";
 
 
 const DATA_BASE = await CombineContexts();
@@ -83,7 +8,8 @@ Analiza la conversación entre el cliente (C) y el asistente (A) para identifica
 
 FLUJOS DISPONIBLES:
 — ID: PEDIDO: Activa este flujo únicamente si el cliente indica explícitamente que quiere hacer una compra o formalizar un pedido de productos de la fábrica de lácteos LeidyLac. No actives este flujo si el cliente solo está preguntando por precios o detalles de los productos.
-
+- ID: DIRECCION: Activa este flujo si el cliente pregunta por la ubicación o la dirección de la fábrica de lácteos LeidyLac.
+- ID: CONTACTO: Activa este flujo si el cliente solicita el contacto o numero de teléfono de un administrador de la empresa LeidyLac.
 
 Debes responder solo con el ID del flujo correspondiente. Si no puedes determinar el flujo o si el cliente muestra interés en otro tema, debes responder 'unknown'.
 ID:
@@ -100,8 +26,10 @@ BASE_DE_DATOS="{context}"
 NOMBRE_DEL_CLIENTE="{customer_name}"
 
 INSTRUCCIONES PARA LA INTERACCIÓN:
-- No inventes respuestas ni especules. Responde únicamente con la información proporcionada en la BASE_DE_DATOS.
+- No especules ni inventes respuestas si la BASE_DE_DATOS no contiene la información necesaria para responder a una pregunta.
 - Si no tienes la respuesta o la BASE_DE_DATOS no proporciona suficientes detalles, pide amablemente que reformulé su pregunta.
+- Antes de responder, asegúrate de que la información necesaria para hacerlo se encuentre en la BASE_DE_DATOS.
+
 
 DIRECTRICES PARA RESPONDER AL CLIENTE:
 - Si el cliente muestra interés en un producto, indícale que primero debe hacer un pedido.

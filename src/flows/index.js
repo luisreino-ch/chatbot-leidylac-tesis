@@ -1,27 +1,32 @@
 import {createFlow} from '@builderbot/bot'
 import { customerFormFlow } from './customerForm.flow.js';
-import { orderInitialFlow, orderFlow} from './flowsOrders/order.flow.js';
-import { cheeseFlow } from './flowsOrders/cheese.flow.js';
-import { yogurtFlow, yogurtPackFlow } from './flowsOrders/yogurt.flow.js';
-import { manjarFlow } from './flowsOrders/manjarFlow.js';
-import { finalOrderFlow, listOrderFlow } from './flowsOrders/finalOrder.flow.js';
-import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowsOrders/editOrder.flow.js';
+import { orderInitialFlow, orderFlow} from './flowsOrder/order.flow.js';
+import { cheeseFlow } from './flowsOrder/cheese.flow.js';
+import { yogurtFlow, yogurtPackFlow } from './flowsOrder/yogurt.flow.js';
+import { manjarFlow } from './flowsOrder/manjarFlow.js';
+import { finalOrderFlow, listOrderFlow } from './flowsOrder/finalOrder.flow.js';
+import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowsOrder/editOrder.flow.js';
 import { checkClient } from './checkClient.flow.js';
 import { welcomeFlow } from './welcome.flow.js';
-import { byeFlow } from './bye.flow.js';
-import { voiceNoteFlow } from './voiceNote.flow.js';
-import { addressFlow } from './address.flow.js';
-import { contactFlow } from './contact.flow.js';
-
-
-const flowsAgents = [
-  checkClient
-  
-];
+import { byeFlow } from './flowsSecondary/bye.flow.js';
+import { voiceNoteFlow } from './flowsSecondary/voiceNote.flow.js';
+import { addressFlow } from './flowsSecondary/address.flow.js';
+import { contactFlow } from './flowsSecondary/contact.flow.js';
 
 const flows = [
   welcomeFlow,
-  customerFormFlow,
+  checkClient,
+  customerFormFlow
+];
+
+const flowsSecondary = [
+  byeFlow,
+  voiceNoteFlow,
+  addressFlow,
+  contactFlow  
+];
+
+const flowsOrder = [
   orderInitialFlow,
   orderFlow,
   cheeseFlow,
@@ -32,14 +37,12 @@ const flows = [
   finalOrderFlow,
   editOrderFlow,
   modifyQuantityFlow,
-  removeProductFlow,
-  byeFlow,
-  voiceNoteFlow,
-  addressFlow,
-  contactFlow
+  removeProductFlow
 ];
 
-const flow = createFlow([...flowsAgents, ...flows])
+
+
+const flow = createFlow([...flows, ...flowsSecondary,...flowsOrder, ])
 
 
 export {flow}

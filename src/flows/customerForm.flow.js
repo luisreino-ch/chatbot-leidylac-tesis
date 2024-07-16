@@ -1,6 +1,6 @@
 import { addKeyword, EVENTS} from "@builderbot/bot";
 import {AttemptHandler} from "../functions/AttemptHandler.js";
-import { orderInitialFlow } from "./flowsOrders/order.flow.js";
+import { orderInitialFlow } from "./flowsOrder/order.flow.js";
 import { sendCustomerData } from "../services/api/clientService.js";
 import { delay } from "../functions/delay.js";  
 
@@ -101,7 +101,8 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
 
   .addAnswer([
     '¿Deseas confirmar su registro?',
-    '\nPor favor escribe *si* ✅ o *no* ❌.'
+    '\nPor favor escribe el número de alguna de las opciones:',
+    '\n1️⃣ Si', '2️⃣ No'
   ], { capture: true }, async (ctx, { state, fallBack, endFlow }) => {
     // Crear una instancia de AttemptHandler
     const attemptHandler = new AttemptHandler(state);
@@ -112,22 +113,21 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     }
 
     // Verificador de respuesta válida y de intentos 
-    if (!["si", "no"].includes(ctx.body.toLowerCase())) {
+    if (!['1','2'].includes(ctx.body)) {
       // Manejo de Intentos Fallidos
       const reachedMaxAttempts = await attemptHandler.handleTries();
       if (reachedMaxAttempts) {
         await state.update({ history: [], tries: 0 });
         return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
       }
-      return fallBack('Por favor escribe una opción válida, solo puedes seleccionar *si* o *no*.');
+      return fallBack('Por favor, selecciona una de las opciones válidas');
     }
 
-    if (ctx.body.toLowerCase() === 'si') {
+    if (ctx.body === '1') {
       await state.update({ history: [], tries: 0 });
-
       console.log('Registro confirmado');
 
-    } else if (ctx.body.toLowerCase() === 'no') {
+    } else if (ctx.body === '2') {
       // Limpiar el array de pedidos
       await state.update({ history: [], tries: 0 });
       return endFlow('❌ Registro, cancelado con éxito.');

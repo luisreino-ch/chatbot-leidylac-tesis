@@ -1,8 +1,9 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
 import { run, runDetermine } from "../services/openai/index.js";
 import { checkClient } from "./checkClient.flow.js";
-import { checkBlacklist } from "../services/api/checkBlacklist.js";
-
+import { checkBlacklist } from "../services/api/checkBlacklistService.js";
+import { addressFlow } from "./flowsSecondary/address.flow.js";
+import { contactFlow } from "./flowsSecondary/contact.flow.js"; 
 
 // Punta de entrada 
 const welcomeFlow = addKeyword(EVENTS.WELCOME)
@@ -16,8 +17,14 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
     }
 
     try {
-      const history = (state.getMyState()?.history ?? []) 
-      const ai = await runDetermine(history)
+      const historyDetermine = (state.getMyState()?.history ?? [])
+
+      historyDetermine.push({
+        role: "user", 
+        content: ctx.body
+      })
+
+      const ai = await runDetermine(historyDetermine)
 
       console.log(`[QUE FLUJO QUIERE]:`, ai.toLowerCase())
 
@@ -30,9 +37,18 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
         return gotoFlow(checkClient)
       }
 
+      if(ai.toLowerCase().includes('direccion')){
+        await state.update({history: null})
+        return gotoFlow(addressFlow)
+      }
+
+      if(ai.toLowerCase().includes('contacto')){
+        await state.update({history: null})
+        return gotoFlow(contactFlow)
+      }
+
+
       
-
-
     } catch (error) {
       console.log(`[ERROR]:`, error)
       return
@@ -44,7 +60,7 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
   .addAction(async (ctx, {flowDynamic, state}) =>{
     
     try {
-      const newHistory = (state.getMyState()?.history ?? []) 
+      const newHistory = (state.getMyState()?.history ?? [])
       const name = ctx?.pushName ?? ''
 
       console.log(`[HISTORY]:`, newHistory)

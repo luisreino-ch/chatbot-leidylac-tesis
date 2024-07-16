@@ -1,5 +1,5 @@
 import { addKeyword } from "@builderbot/bot";
-import { checkBlacklist } from "../services/api/checkBlacklist.js";
+import { checkBlacklist } from "../../services/api/checkBlacklistService.js";
 
 const contactFlow = addKeyword('contacto')
 
@@ -13,8 +13,8 @@ const contactFlow = addKeyword('contacto')
 
   })
 
-  .addAnswer(['Aquí tienes el contacto de un administrador de la empresa LeidyLac:'], null, async (ctx, { endFlow, provider}) => {
-
+  .addAnswer(['Aquí tienes el contacto de un administrador de la empresa LeidyLac:'], null, async (ctx, {state, endFlow, provider}) => {
+    await state.update({ history: []});
 
     const vcard = 
             'BEGIN:VCARD\n' // metadata of the contact card
