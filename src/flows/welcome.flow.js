@@ -1,9 +1,10 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
 import { run, runDetermine } from "../services/openai/index.js";
-import { checkClient } from "./checkClient.flow.js";
+import { checkClient } from "./flowsOrder/checkClient.flow.js";
 import { checkBlacklist } from "../services/api/checkBlacklistService.js";
 import { addressFlow } from "./flowsSecondary/address.flow.js";
 import { contactFlow } from "./flowsSecondary/contact.flow.js"; 
+
 
 // Punta de entrada 
 const welcomeFlow = addKeyword(EVENTS.WELCOME)

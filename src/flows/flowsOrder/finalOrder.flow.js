@@ -21,7 +21,7 @@ const listOrderFlow = addKeyword(EVENTS.ACTION)
 
   summary += `\n*Total del Pedido: $${total.toFixed(2)}*`;
 
-  await state.update({ detailsOrder: summary, phone: ctx.from });
+  await state.update({ detailsOrder: summary, phone: ctx.from, eltotal: total });
 
   // Redireccionar al flujo finalOrderFlow
   await flowDynamic(`${summary}`)
@@ -57,6 +57,11 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
     
 
     if (ctx.body.toLowerCase() === '1') {
+
+      if(state.get('eltotal') < 30){
+        return fallBack('El monto mínimo de compra es de $30.00. Por favor, elige la opción 2️⃣ y agrega mas productos antes de confirmar el pedido.')
+      }
+
       if(order.length === 0){
         return fallBack('No hay productos en el pedido. Por favor, elige la opción 2️⃣ y agrega productos antes de confirmar el pedido.')
       }

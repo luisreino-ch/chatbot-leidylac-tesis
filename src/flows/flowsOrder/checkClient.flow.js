@@ -1,8 +1,10 @@
 import {addKeyword} from "@builderbot/bot";
-import { checkClientService } from "../services/api/checkClientService.js";
-import { orderInitialFlow } from "./flowsOrder/order.flow.js";
+import { checkClientService } from "../../services/api/checkClientService.js";
 import { customerFormFlow } from "./customerForm.flow.js";
-import { checkBlacklist } from "../services/api/checkBlacklistService.js";
+import { orderInitialFlow } from "./order.flow.js";
+import { checkBlacklist } from "../../services/api/checkBlacklistService.js";
+
+
 
 const checkClient = addKeyword('pedido')
   .addAction( async(ctx, { gotoFlow, endFlow}) => {

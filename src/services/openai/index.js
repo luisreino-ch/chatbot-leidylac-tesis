@@ -42,7 +42,7 @@ const callOpenAI = async (prompt, history) => {
 
 const run = async (name, history) => {
   console.log("HISTORIAL ANTES DE ENTRAR AL MOTOR : ", history)
-  const greetingStatus = history.length === 0 ? false : true;
+  const greetingStatus = history.length === 0 ? 'false' : 'true';
   const prompt = generatePrompt(name, greetingStatus);
   console.log(`[PROMPT]:`, prompt);
   return await callOpenAI(prompt, history);

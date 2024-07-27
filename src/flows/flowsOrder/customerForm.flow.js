@@ -1,8 +1,10 @@
 import { addKeyword, EVENTS} from "@builderbot/bot";
-import {AttemptHandler} from "../functions/AttemptHandler.js";
-import { orderInitialFlow } from "./flowsOrder/order.flow.js";
-import { sendCustomerData } from "../services/api/clientService.js";
-import { delay } from "../functions/delay.js";  
+import { AttemptHandler } from "../../functions/AttemptHandler.js";
+import { delay } from "../../functions/delay.js";
+import { sendCustomerData } from "../../services/api/clientService.js";
+import { orderInitialFlow } from "./order.flow.js";
+
+  
 
 const customerFormFlow = addKeyword(EVENTS.ACTION)
   .addAnswer([
