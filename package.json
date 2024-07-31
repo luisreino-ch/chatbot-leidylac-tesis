@@ -11,7 +11,6 @@
   },
   "keywords": [],
   "dependencies": {
-    "@builderbot-plugins/openai-agents": "^1.0.10",
     "@builderbot/bot": "1.1.6",
     "@builderbot/provider-baileys": "1.1.6",
     "dotenv": "^16.4.5",

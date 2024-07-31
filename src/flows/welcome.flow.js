@@ -20,16 +20,15 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
     try {
       const historyDetermine = (state.getMyState()?.history ?? [])
 
-      historyDetermine.push({
-        role: "user", 
-        content: ctx.body
-      })
-
       const ai = await runDetermine(historyDetermine)
 
       console.log(`[QUE FLUJO QUIERE]:`, ai.toLowerCase())
 
       if(ai.toLowerCase().includes('unknown')){
+        historyDetermine.push({
+          role: "user", 
+          content: ctx.body
+        })
         return
       }
 
@@ -48,7 +47,6 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
         return gotoFlow(contactFlow)
       }
 
-
       
     } catch (error) {
       console.log(`[ERROR]:`, error)
@@ -57,7 +55,6 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
   })
 
   
-
   .addAction(async (ctx, {flowDynamic, state}) =>{
     
     try {
@@ -66,11 +63,7 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
 
       console.log(`[HISTORY]:`, newHistory)
 
-      newHistory.push({
-        role: "user", 
-        content: ctx.body
-      })
-
+      
       const largeResponse = await run(name, newHistory)
 
       const chunks = largeResponse.split(/(?<!\d)\.\s+/g);

@@ -83,7 +83,7 @@ const finalOrderFlow = addKeyword(EVENTS.ACTION)
     // Lógica para guardar el pedido en la base de datos
     await sendOrderData(state);
     await delay(1000);
-    return endFlow('✅ ¡Pedido realizado con éxito! Nos comunicaremos muy pronto para finalizar tu compra.')
+    return endFlow('✅ ¡Pedido realizado con éxito! Muy pronto un administrador se pondrá en contacto contigo para finalizar la compra. ¡Gracias por preferirnos! 🐮');
   })
 
 
