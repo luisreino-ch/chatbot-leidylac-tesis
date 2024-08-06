@@ -6,7 +6,7 @@ import { checkBlacklist } from "../../services/api/checkBlacklistService.js";
 
 
 
-const checkClient = addKeyword('pedido')
+const checkClient = addKeyword(['pedido','PEDIDO'],{ sensitive: true })
   .addAction( async(ctx, { gotoFlow, endFlow}) => {
 
     // chequeo si el usuario está en la blacklist

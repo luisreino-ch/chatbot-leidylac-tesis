@@ -19,9 +19,9 @@ const contactFlow = addKeyword('contacto')
     const vcard = 
             'BEGIN:VCARD\n' // metadata of the contact card
             + 'VERSION:3.0\n' 
-            + 'FN:Katherine Chuchuca\n' // full name
-            + 'ORG:Katherine Chuchuca;\n' // the organization of the contact
-            + 'TEL;type=CELL;type=VOICE;waid=593980643995:+593980643995\n' // WhatsApp ID + phone number
+            + 'FN:Administrador 1\n' // full name
+            + 'ORG:Administrador 1;\n' // the organization of the contact
+            + 'TEL;type=CELL;type=VOICE;waid=593111111111:+593111111111\n' // WhatsApp ID + phone number
             + 'END:VCARD'
 
     
@@ -32,7 +32,7 @@ const contactFlow = addKeyword('contacto')
       id,
       { 
         contacts: { 
-            displayName: 'Katherine Chuchuca', 
+            displayName: 'Administrador 1', 
             contacts: [{ vcard }] 
         }
       }
