@@ -1,9 +1,11 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
-import { run, runDetermine } from "../services/openai/index.js";
-import { checkClient } from "./flowsOrder/checkClient.flow.js";
-import { checkBlacklist } from "../services/api/checkBlacklistService.js";
-import { addressFlow } from "./flowsSecondary/address.flow.js";
-import { contactFlow } from "./flowsSecondary/contact.flow.js"; 
+//import { run, runDetermine } from "../services/openai/index.js";
+import { run, runDetermine } from "../../services/openai/callOpenAI.js";
+import { checkClient } from "../flowsOrder/checkClient.flow.js";
+import { checkBlacklist } from "../../services/api/checkBlacklistService.js";
+import { addressFlow } from "../flowsSecondary/address.flow.js";
+import { contactFlow } from "../flowsSecondary/contact.flow.js"; 
+import { byeFlow } from "../flowsSecondary/bye.flow.js";
 
 
 // Punta de entrada 
@@ -47,7 +49,11 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
         return gotoFlow(contactFlow)
       }
 
-      
+      if(ai.toLowerCase().includes('despedida')){
+        await state.update({history: null})
+        return gotoFlow(byeFlow)
+      }
+
     } catch (error) {
       console.log(`[ERROR]:`, error)
       return

@@ -7,7 +7,7 @@ import { manjarFlow } from './flowsOrder/manjarFlow.js';
 import { finalOrderFlow, listOrderFlow } from './flowsOrder/finalOrder.flow.js';
 import { editOrderFlow, modifyQuantityFlow, removeProductFlow } from './flowsOrder/editOrder.flow.js';
 import { checkClient } from './flowsOrder/checkClient.flow.js';
-import { welcomeFlow } from './welcome.flow.js';
+import { welcomeFlow } from './flowMain/welcome.flow.js';
 import { byeFlow } from './flowsSecondary/bye.flow.js';
 import { voiceNoteFlow } from './flowsSecondary/voiceNote.flow.js';
 import { addressFlow } from './flowsSecondary/address.flow.js';
