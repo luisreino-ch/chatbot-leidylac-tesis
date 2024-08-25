@@ -1,7 +1,7 @@
 import { addKeyword } from "@builderbot/bot";
 import { checkBlacklist } from "../../services/api/checkBlacklistService.js";
 
-const contactFlow = addKeyword('contacto')
+const contactFlow = addKeyword(['contacto','contactar',])
 
   .addAction( async(ctx, { endFlow }) => {
     

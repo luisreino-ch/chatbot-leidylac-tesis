@@ -15,22 +15,30 @@ const welcomeFlow = addKeyword(EVENTS.WELCOME)
 
     const blacklistUser = await checkBlacklist(ctx);
 
-    if (blacklistUser) {
+    if (blacklistUser ) {
         return endFlow()
+    }
+
+    if (ctx.body.length > 150) {
+      return endFlow('🙁 No puedo procesar mensajes tan largos, por favor intenta con una pregunta más corta.')
     }
 
     try {
       const historyDetermine = (state.getMyState()?.history ?? [])
 
+      historyDetermine.push({
+        role: "user", 
+        content: ctx.body
+      })
+
+      await state.update({history: historyDetermine})
+
       const ai = await runDetermine(historyDetermine)
 
+      console.log(`[HISTORY]:`, historyDetermine)
       console.log(`[QUE FLUJO QUIERE]:`, ai.toLowerCase())
 
       if(ai.toLowerCase().includes('unknown')){
-        historyDetermine.push({
-          role: "user", 
-          content: ctx.body
-        })
         return
       }
 

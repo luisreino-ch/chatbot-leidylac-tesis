@@ -5,7 +5,7 @@ import { yogurtFlow } from "./yogurt.flow.js";
 import { manjarFlow } from "./manjarFlow.js";
 
 const orderInitialFlow = addKeyword(EVENTS.ACTION)
-.addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', 'Si en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.'], 
+.addAnswer(['📝 *Voy a tomar tu pedido* 📝 ', 'Si en algún momento deseas cancelar el pedido, simplemente escribe la palabra *cancelar* y detendremos el proceso.', '\nNota: Solo se aceptan pedidos con un valor mínimo de 30$.'], 
   null, async (ctx, { gotoFlow }) => {
     return gotoFlow(orderFlow);
   }

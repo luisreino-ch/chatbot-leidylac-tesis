@@ -12,6 +12,7 @@ const sendCustomerData = async (state) => {
       ciudad: state.get('city'),
       negocio: state.get('business'),
       fecha:  new Date().toISOString(), // Fecha actual en formato ISO
+      cedula: state.get('identityCard')
     }
   };
   

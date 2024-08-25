@@ -1,10 +1,10 @@
 import { addKeyword, EVENTS} from "@builderbot/bot";
 import { AttemptHandler } from "../../functions/AttemptHandler.js";
+import { validarCedula } from "../../functions/validateIdentityCard.js";
 import { delay } from "../../functions/delay.js";
 import { sendCustomerData } from "../../services/api/clientService.js";
 import { orderInitialFlow } from "./order.flow.js";
 
-  
 
 const customerFormFlow = addKeyword(EVENTS.ACTION)
   .addAnswer([
@@ -38,6 +38,37 @@ const customerFormFlow = addKeyword(EVENTS.ACTION)
     // Si el nombre es válido, actualizar el estado con el nombre y reiniciar el contador de intentos
     await state.update({ fullName: ctx.body, phone: ctx.from, tries: 0 });
   })
+
+
+  .addAnswer('¿Cuál es tu cédula de identidad?', { capture: true }, async (ctx, { state, endFlow, fallBack }) => {
+    
+    const identity = validarCedula(ctx.body)
+
+    // Crear una instancia de AttemptHandler
+    const attemptHandler = new AttemptHandler(state);
+    
+    // Verificador de cancelación
+    if (ctx.body.toLowerCase() === 'cancelar') {
+      await state.update({ history: [], tries: 0 });
+      return endFlow('Registro cancelado con éxito.');
+    }
+
+
+    // Verificador de respuesta válida y de intentos 
+    if (!identity) {
+      // Manejo de Intentos Fallidos
+      const reachedMaxAttempts = await attemptHandler.handleTries();
+      if (reachedMaxAttempts) {
+        await state.update({ history: [], tries: 0 });
+        return endFlow('Has alcanzado el número máximo de intentos. Inténtalo más tarde.');
+      }
+      return fallBack('Por favor, escribe un número de cédula válido.');
+    }
+
+    // Si el nombre es válido, actualizar el estado con el nombre y reiniciar el contador de intentos
+    await state.update({ identityCard: ctx.body, tries: 0 });
+  })
+
 
   .addAnswer('¿De qué ciudad eres?', { capture: true }, async (ctx, { state, endFlow, fallBack }) => {
 

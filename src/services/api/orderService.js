@@ -22,6 +22,7 @@ const sendOrderData = async (state) => {
 
   const idClient = client.id;
   const nameClient = client.attributes.nombre;
+  const cedulaClient = client.attributes.cedula;
   const cityClient = client.attributes.ciudad;
   const phoneClient = client.attributes.celular;
   const detailsOrder = state.get('detailsOrder');
@@ -35,7 +36,8 @@ const sendOrderData = async (state) => {
       ciudad: cityClient,
       detalles: detailsOrder,
       fecha: new Date().toISOString(), // Fecha actual en formato ISO
-      cliente: idClient
+      cliente: idClient,
+      cedula: cedulaClient
     }
   };
 

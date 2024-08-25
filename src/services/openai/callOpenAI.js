@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import OpenAI from "openai";
-//import { generatePrompt, generatePromptDetermine } from "./prompt.js";
-import { generatePrompt} from "./promptContext.js";
-import { generatePromptDetermine } from "./promptDetermine.js";
+import { generatePrompt, generatePromptDetermine } from "./prompt.js";
+/* import { generatePrompt} from "./promptContext.js";
+import { generatePromptDetermine } from "./promptDetermine.js"; */
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -44,7 +44,7 @@ const callOpenAI = async (prompt, history) => {
 
 const run = async (name, history) => {
   console.log("HISTORIAL ANTES DE ENTRAR AL MOTOR : ", history)
-  const greetingStatus = history.length === 0 ? 'false' : 'true';
+  const greetingStatus = history.length === 1 ? 'false' : 'true';
   const prompt = generatePrompt(name, greetingStatus);
   console.log(`[PROMPT]:`, prompt);
   return await callOpenAI(prompt, history);
