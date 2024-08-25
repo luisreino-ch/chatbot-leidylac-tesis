@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import OpenAI from "openai";
-import { generatePrompt, generatePromptDetermine } from "./prompt.js";
-/* import { generatePrompt} from "./promptContext.js";
-import { generatePromptDetermine } from "./promptDetermine.js"; */
+//import { generatePrompt, generatePromptDetermine } from "./prompt.js";
+import { generatePrompt} from "./promptContext.js";
+import { generatePromptDetermine } from "./promptDetermine.js"; 
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
